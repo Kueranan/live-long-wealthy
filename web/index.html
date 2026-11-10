@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Live Long Wealthy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body class="antialiased">
+<a href="#results" class="skip-link">ข้ามไปดูผลการจำลอง</a>
+
+<div class="mx-auto flex max-w-[1440px] flex-col gap-6 lg:gap-8">
+  <nav class="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--line)] pb-5" aria-label="เมนูหลัก">
+    <a href="#" class="flex items-center gap-3 font-semibold text-lg no-underline text-[var(--ink)]">
+      <svg class="brand-mark" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="10" fill="currentColor"/><path d="M10 11v15h17M15 21l5-6 6 2M26 17v-6h-6" stroke="var(--card)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Live Long Wealthy
+    </a>
+    <div class="flex items-center gap-5 text-sm"><a class="nav-link" href="#planner">วางแผนการเงิน</a><a class="nav-link" href="#theory">แนวคิดเบื้องหลัง</a></div>
+  </nav>
+  <header class="flex flex-col gap-4 py-3 sm:py-5 lg:flex-row lg:items-end lg:justify-between">
+    <div class="max-w-xl"><h1>วางแผนวันนี้<br><span class="text-[var(--accent)]">เพื่อชีวิตที่มั่นใจขึ้น</span></h1></div>
+    <p class="tag lg:max-w-md">แพลตฟอร์มวางแผนการเงินตลอดชีวิต จำลองอนาคต 2,000 เส้นทางเพื่อตอบคำถามเดียว: เงินของคุณจะพอใช้ไปตลอดชีวิตหรือไม่</p>
+  </header>
+
+  <div id="planner" class="grid grid-cols-1 items-start gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
+
+    <aside class="flex min-w-0 flex-col gap-5">
+      <section class="panel group" aria-labelledby="h-who">
+        <h2 id="h-who">ตัวอย่างผู้ใช้</h2>
+        <div class="personas" role="group" aria-label="เลือกตัวอย่างผู้ใช้">
+          <button type="button" id="p-first" data-p="first" aria-pressed="true">First jobber<br><small>อายุ 23</small></button>
+          <button type="button" id="p-work" data-p="work" aria-pressed="false">วัยทำงาน<br><small>อายุ 35</small></button>
+          <button type="button" id="p-pre" data-p="pre" aria-pressed="false">ใกล้เกษียณ<br><small>อายุ 55</small></button>
+        </div>
+        <p class="sub">ตัวเลขเริ่มต้นเป็นข้อมูลตัวอย่าง ปรับให้ตรงกับตัวคุณได้</p>
+      </section>
+
+      <details class="panel input-details" id="financial-inputs" open>
+        <summary id="h-in">ข้อมูลการเงินวันนี้ <span class="sub">แก้ไขข้อมูล</span></summary>
+        <div class="input-content">
+        <div class="group">
+          <div class="field"><div class="row"><label for="age">อายุ</label><output id="o-age"></output></div><input type="range" id="age" min="20" max="64" step="1"></div>
+          <div class="field"><div class="row"><label for="income">รายได้ต่อเดือน</label><output id="o-income"></output></div><input type="range" id="income" min="10000" max="200000" step="1000"></div>
+          <div class="field"><div class="row"><label for="saving">เงินออม/ลงทุนต่อเดือน</label><output id="o-saving"></output></div><input type="range" id="saving" min="0" max="60000" step="500"></div>
+          <div class="field"><div class="row"><label for="assets">เงินเก็บที่มีอยู่</label><output id="o-assets"></output></div><input type="range" id="assets" min="0" max="10000000" step="5000"></div>
+        </div>
+        <div class="group">
+          <span class="gt">หนี้</span>
+          <div class="field"><div class="row"><label for="debt">หนี้คงค้าง (บัตรเครดิต / BNPL / สินเชื่อส่วนบุคคล)</label><output id="o-debt"></output></div><input type="range" id="debt" min="0" max="500000" step="5000"></div>
+          <div class="field"><div class="row"><label for="drate">ดอกเบี้ยหนี้ต่อปี</label><output id="o-drate"></output></div><input type="range" id="drate" min="0" max="33" step="1"></div>
+          <div class="field"><div class="row"><label for="dpay">ผ่อนหนี้ต่อเดือน</label><output id="o-dpay"></output></div><input type="range" id="dpay" min="0" max="30000" step="500"></div>
+        </div>
+        <div class="group">
+          <span class="gt">เป้าหมายเกษียณ</span>
+          <div class="field"><div class="row"><label for="retage">อายุเกษียณ</label><output id="o-retage"></output></div><input type="range" id="retage" min="45" max="70" step="1"></div>
+          <div class="field"><div class="row"><label for="spend">ค่าใช้จ่ายหลังเกษียณต่อเดือน (มูลค่าวันนี้)</label><output id="o-spend"></output></div><input type="range" id="spend" min="5000" max="150000" step="1000"></div>
+          <div class="field"><label for="risk">ระดับความเสี่ยงที่รับได้</label>
+            <select id="risk"><option value="0.7">ระมัดระวัง</option><option value="1" selected>ปานกลาง</option><option value="1.25">รับความเสี่ยงได้สูง</option></select></div>
+        </div>
+        <div class="group">
+          <span class="gt">กลยุทธ์</span>
+          <label class="toggle" for="smart"><input type="checkbox" id="smart"><span>Save More Tomorrow<small>เพิ่มอัตราออมปีละ 1% ของรายได้ จนเพิ่มขึ้นรวม 10%</small></span></label>
+          <label class="toggle" for="debtfirst"><input type="checkbox" id="debtfirst"><span>ปิดหนี้ดอกเบี้ยสูงก่อน<small>นำเงินออมไปโปะหนี้จนหมด แล้วค่อยลงทุน</small></span></label>
+        </div>
+        </div>
+      </details>
+    </aside>
+
+    <main id="results" tabindex="-1" class="flex min-w-0 scroll-mt-6 flex-col gap-6">
+      <div class="flex flex-wrap items-center justify-between gap-2"><h2>ภาพรวมแผนของคุณ</h2><span class="sub flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[var(--good)]" aria-hidden="true"></span>ปรับข้อมูลเพื่อจำลองผลใหม่</span></div>
+      <section class="panel verdict" aria-live="polite" aria-label="ผลการจำลองแผนการเงิน">
+        <div class="gauge">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="var(--line)" stroke-width="10"></circle>
+            <circle class="arc" id="arc" cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+          </svg>
+          <div class="val"><span class="pct" id="pct">–</span><span class="lbl">โอกาสที่เงินพอใช้<br>ตลอดชีวิต</span></div>
+        </div>
+        <div class="story">
+          <span id="status" class="pill"></span>
+          <p class="lead" id="lead"></p>
+          <p class="sub" id="lead2"></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="cards-head"><h2>ตัวเราในอนาคต</h2><span class="sub">มูลค่าเงินคิดเป็นอำนาจซื้อของวันนี้</span></div>
+        <div class="grid grid-cols-1 divide-y divide-[var(--line)] md:grid-cols-3 md:divide-x md:divide-y-0" id="selves"></div>
+      </section>
+
+      <section class="panel">
+        <div class="cards-head"><h2>ความมั่งคั่งตลอดชีวิต</h2><span class="sub">ช่วงของ 2,000 อนาคตที่จำลอง</span></div>
+        <div class="chartwrap" tabindex="0" role="region" aria-label="กราฟความมั่งคั่ง เลื่อนแนวนอนเพื่อดูอายุทั้งหมด"><svg class="fan" id="fan" viewBox="0 0 680 300" role="img" aria-label="กราฟช่วงความมั่งคั่งตามอายุ"></svg></div>
+        <p class="sub mt-3 sm:hidden">เลื่อนกราฟซ้าย–ขวาเพื่อดูทุกช่วงอายุ</p>
+        <div class="legend">
+          <span><i style="background:var(--band2)"></i>80% ของอนาคต (P10–P90)</span>
+          <span><i style="background:var(--band)"></i>50% ของอนาคต (P25–P75)</span>
+          <span><i style="background:var(--accent);height:3px"></i>ค่ากลาง</span>
+          <span><i style="border-top:2px dashed var(--warn);height:0"></i>อายุเกษียณ</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="cards-head"><h2>ลองปรับดู แล้วเห็นผลทันที</h2><span class="sub">กดเพื่อนำไปใช้กับแผน</span></div>
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2" id="wis"></div>
+      </section>
+
+      <section class="panel" id="theory">
+        <h2 class="mb-6">ทฤษฎีที่อยู่เบื้องหลัง</h2>
+        <div class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+          <div class="th"><b>Life-Cycle Hypothesis</b><span>Modigliani (1954) ออมช่วงมีรายได้ ใช้ช่วงเกษียณ แผนจึงแบ่งเป็นช่วงสะสมและช่วงใช้เงิน</span></div>
+          <div class="th"><b>Human Capital + MPT</b><span>Ibbotson et al. (2007), Markowitz (1952) สัดส่วนหุ้นลดลงตามอายุ (glide path) เมื่อรายได้ในอนาคตเหลือน้อยลง</span></div>
+          <div class="th"><b>Longevity risk</b><span>Yaari (1965) อายุขัยเป็นการแจกแจงแบบ Gompertz ไม่ใช่ตัวเลขเดียว</span></div>
+          <div class="th"><b>Monte Carlo + Bayesian</b><span>ผลตอบแทนคาดหวังของแต่ละเส้นทางสุ่มจากการแจกแจงก่อนหน้า (prior) จึงรวมความไม่แน่นอนของพารามิเตอร์ด้วย</span></div>
+          <div class="th"><b>Safe Withdrawal Rate</b><span>Bengen (1994) หาค่าใช้จ่ายสูงสุดที่เงินยังพอใช้ในอย่างน้อย 85% ของอนาคต</span></div>
+          <div class="th"><b>Behavioral Finance</b><span>Hershfield et al. (2011) ภาพตัวเราในอนาคต และ Thaler &amp; Benartzi (2004) Save More Tomorrow</span></div>
+        </div>
+      </section>
+
+      <p class="foot">ต้นแบบเพื่อการแข่งขัน ใช้สมมติฐานอย่างง่าย: ผลตอบแทนหุ้นคาดหวัง 7.5%/ปี (ผันผวน 17%) ตราสารหนี้ 3% (ผันผวน 5%) เงินเฟ้อเฉลี่ย 2.5% รายได้จริงเพิ่มปีละ 2% อายุขัยตามแบบจำลอง Gompertz ที่ค่ากลางราว 82 ปี และค่ารักษาพยาบาลเพิ่มขึ้น 1.5% ของค่าใช้จ่ายต่อปีหลังอายุ 60 ผลลัพธ์ไม่ใช่คำแนะนำการลงทุน</p>
+    </main>
+  </div>
+  <footer class="flex flex-wrap justify-between gap-3 border-t border-[var(--line)] pt-5 text-xs text-[var(--muted)]"><span>Live Long Wealthy · วางแผนการเงินตลอดชีวิต</span><span>Trinity Hackathon 2026 · Track 2 Wealth for Everyone</span></footer>
+</div>
+
+<script>
+(function(){
+if(window.matchMedia("(max-width: 1279px)").matches) document.getElementById("financial-inputs").open=false;
+const N=2000, MAXAGE=105, SEED=20261110;
+const PERSONAS={
+  first:{age:23,income:20000,saving:1500,assets:15000,debt:40000,drate:18,dpay:2000,retage:60,spend:15000,risk:"1",smart:false,debtfirst:false},
+  work:{age:35,income:50000,saving:8000,assets:600000,debt:0,drate:0,dpay:0,retage:60,spend:30000,risk:"1",smart:false,debtfirst:false},
+  pre:{age:55,income:70000,saving:15000,assets:3500000,debt:0,drate:0,dpay:0,retage:60,spend:35000,risk:"0.7",smart:false,debtfirst:false}
+};
+// --- common random numbers so every what-if is compared on the same 2,000 futures
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const r=mulberry(SEED);
+function g(){let u=0;while(u===0)u=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*r())}
+const Y=MAXAGE-20+1;
+const U=new Float64Array(N), MUE=new Float64Array(N), MUB=new Float64Array(N);
+const ZE=new Float64Array(N*Y), ZB=new Float64Array(N*Y), ZI=new Float64Array(N*Y);
+for(let i=0;i<N;i++){U[i]=Math.max(1e-9,r());MUE[i]=g();MUB[i]=g();for(let t=0;t<Y;t++){ZE[i*Y+t]=g();ZB[i*Y+t]=g();ZI[i*Y+t]=g()}}
+// Gompertz mortality: h(x)=A e^{Bx}, median adult lifespan ~82
+const GA=0.00004, GB=0.09;
+function deathAge(age,u){const v=Math.exp(GB*age)-GB*Math.log(u)/GA;return Math.min(MAXAGE,Math.log(v)/GB)}
+function survive(age,x){return Math.exp(-GA/GB*(Math.exp(GB*x)-Math.exp(GB*age)))}
+
+function simulate(p,opts){
+  opts=opts||{};
+  const A=p.age, R=p.retage, T=MAXAGE-A, riskM=+p.risk, keep=!!opts.keep;
+  const wealth=keep?new Float64Array(N*(T+1)):null;
+  let success=0; const ruinAges=[];
+  // deterministic debt schedule (same for every path)
+  const debtSched=[]; {let d=p.debt, y=0;
+    while(y<=T){ const payBase=p.dpay*12, extra=p.debtfirst?p.saving*12:0; let pay=0, toInvest=p.saving*12;
+      if(d>0){ d*=1+p.drate/100; pay=Math.min(d,payBase+extra); d-=pay; if(p.debtfirst) toInvest=Math.max(0,p.saving*12-Math.max(0,pay-payBase)); }
+      else { toInvest=p.saving*12+p.dpay*12; }
+      debtSched.push({toInvest,debt:d}); y++; } }
+  for(let i=0;i<N;i++){
+    const dAge=deathAge(A,U[i]);
+    const muE=0.075+0.015*MUE[i], muB=0.03+0.005*MUB[i];
+    let W=p.assets, ruined=-1;
+    if(keep) wealth[i*(T+1)]=W;
+    for(let t=0;t<T;t++){
+      const age=A+t, k=i*Y+(age-20);
+      const w=Math.min(0.9,Math.max(0.1,(110-age)/100*riskM));
+      const nom=w*(muE+0.17*ZE[k])+(1-w)*(muB+0.05*ZB[k]);
+      const infl=0.025+0.012*ZI[k];
+      const real=(1+nom)/(1+infl)-1;
+      let flow;
+      if(age<R){
+        const ds=debtSched[t];
+        let contrib=ds.toInvest*Math.pow(1.02,t);
+        if(p.smart){const inc=p.income*12*Math.pow(1.02,t);contrib+=inc*Math.min(0.10,0.01*t)}
+        flow=contrib;
+      } else {
+        const health=age>60?1+0.015*(age-60):1;
+        flow=-p.spend*12*health;
+      }
+      W=W>0?W*(1+real)+flow:W+flow;
+      if(W<0&&ruined<0) ruined=age+1;
+      if(keep) wealth[i*(T+1)+t+1]=W;
+    }
+    if(ruined<0||ruined>dAge) success++; else ruinAges.push(ruined);
+  }
+  return {p:success/N, ruinAges, wealth, T};
+}
+function quant(arr,q){const a=Array.from(arr).sort((x,y)=>x-y);if(!a.length)return NaN;const i=(a.length-1)*q,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo)}
+function safeSpend(p){let lo=1000,hi=Math.max(20000,p.spend*4);for(let j=0;j<14;j++){const m=(lo+hi)/2;const s=simulate({...p,spend:m}).p;if(s>=0.85)lo=m;else hi=m}return lo}
+
+// --- formatting
+const fmtB=v=>{const a=Math.abs(v);if(a>=1e6)return (v/1e6).toLocaleString('th-TH',{maximumFractionDigits:1})+' ล้าน';return Math.round(v).toLocaleString('th-TH')};
+const baht=v=>fmtB(v)+' บาท';
+const pc=v=>Math.round(v*100)+'%';
+
+// --- inputs
+const ids=["age","income","saving","assets","debt","drate","dpay","retage","spend"];
+const outs={age:v=>v+' ปี',income:v=>baht(v),saving:v=>baht(v),assets:v=>baht(v),debt:v=>baht(v),drate:v=>v+'%',dpay:v=>baht(v),retage:v=>v+' ปี',spend:v=>baht(v)};
+const $=id=>document.getElementById(id);
+function read(){const p={};ids.forEach(k=>p[k]=+$(k).value);p.risk=$("risk").value;p.smart=$("smart").checked;p.debtfirst=$("debtfirst").checked;if(p.retage<=p.age)p.retage=p.age+1;return p}
+function write(p){ids.forEach(k=>{$(k).value=p[k]});$("risk").value=p.risk;$("smart").checked=p.smart;$("debtfirst").checked=p.debtfirst}
+
+function render(){
+  const p=read();
+  ids.forEach(k=>{const el=$(k);$('o-'+k).textContent=outs[k](p[k]);el.style.setProperty('--fill',((el.value-el.min)/(el.max-el.min)*100)+'%');el.setAttribute('aria-valuetext',outs[k](p[k]));});
+  const base=simulate(p,{keep:true});
+  // gauge + verdict
+  const s=base.p; $("pct").textContent=pc(s);
+  $("arc").setAttribute("stroke-dashoffset",(314.16*(1-s)).toFixed(1));
+  const cls=s>=0.8?'good':s>=0.55?'warn':'bad';
+  $("arc").setAttribute("stroke",`var(--${cls==='good'?'good':cls==='warn'?'warn':'bad'})`);
+  const st=$("status");st.className='pill '+cls;st.textContent=cls==='good'?'แผนแข็งแรง':cls==='warn'?'ยังเสี่ยงอยู่บ้าง':'มีโอกาสเงินหมดก่อนชีวิต';
+  const medRuin=quant(base.ruinAges,0.5);
+  const life=quant(Array.from(U,u=>deathAge(p.age,u)),0.5);
+  const ss=safeSpend(p);
+  $("lead").innerHTML=`ถ้าใช้เงินแบบวันนี้ต่อไป คุณมีโอกาส <span class="num">${pc(s)}</span> ที่เงินจะพอใช้ไปตลอดชีวิต`+
+    (base.ruinAges.length?` ในอนาคตที่เงินไม่พอ เงินมักหมดตอนอายุราว <span class="num">${Math.round(medRuin)}</span> ปี`:'');
+  $("lead2").innerHTML=`ค่ากลางอายุขัยของคุณราว ${Math.round(life)} ปี แต่มีโอกาส ${pc(survive(p.age,90))} ที่จะอยู่ถึง 90 · หลังเกษียณใช้ได้ไม่เกินราว <b>${baht(ss)}/เดือน</b> เพื่อให้เงินพอในอย่างน้อย 85% ของอนาคต`;
+  // future selves
+  const ages=[60,80,90].map(a=>Math.max(a,p.age+1));
+  $("selves").innerHTML=ages.map(a=>{
+    const t=Math.min(base.T,a-p.age); const col=[];let pos=0;
+    for(let i=0;i<N;i++){const v=base.wealth[i*(base.T+1)+t];col.push(v);if(v>0)pos++}
+    const alive=survive(p.age,a), med=quant(col,0.5), left=pos/N;
+    const phase=a<p.retage?'ยังทำงาน':'เกษียณแล้ว';
+    const monthly=a>=p.retage?Math.max(0,med)/Math.max(1,(Math.round(life>a?life:a+5)-a)*12):null;
+    return `<article class="self"><div class="age">${a}<small>ปี · ${phase}</small></div>
+      <div class="kv"><span>เงินคงเหลือ (ค่ากลาง)</span><span class="num">${med>0?baht(med):'หมดแล้ว'}</span></div>
+      <div class="kv"><span>โอกาสยังมีเงินเหลือ</span><span class="num">${pc(left)}</span></div>
+      <div class="bar" aria-hidden="true"><i style="width:${(left*100).toFixed(0)}%"></i></div>
+      <div class="kv"><span>โอกาสมีชีวิตถึงอายุนี้</span><span class="num">${pc(alive)}</span></div>
+      <p class="note">${a<p.retage?'ช่วงสะสมความมั่งคั่ง สัดส่วนหุ้นราว '+pc(Math.min(.9,Math.max(.1,(110-a)/100*+p.risk))):left>=0.8?'ใช้ชีวิตได้ตามแผน':left>=0.5?'ต้องเริ่มลดค่าใช้จ่ายบางส่วน':'มีความเสี่ยงต้องพึ่งลูกหลานหรือสวัสดิการรัฐ'}</p></article>`;
+  }).join('');
+  drawFan(p,base);
+  // what-ifs
+  const W=[
+    {t:'ออมเพิ่มเดือนละ 500 บาท',d:'เท่ากับกาแฟราว 4 แก้ว',ch:{saving:p.saving+500}},
+    {t:'ออมเพิ่มเดือนละ 2,000 บาท',d:'',ch:{saving:p.saving+2000}},
+    {t:'เกษียณช้าลง 3 ปี',d:`อายุ ${p.retage+3} ปี`,ch:{retage:Math.min(70,p.retage+3)}},
+    {t:'ลดค่าใช้จ่ายหลังเกษียณ 10%',d:baht(Math.round(p.spend*0.9/1000)*1000)+'/เดือน',ch:{spend:Math.round(p.spend*0.9/1000)*1000}},
+    {t:'เปิด Save More Tomorrow',d:'เพิ่มอัตราออมปีละ 1%',ch:{smart:true},hide:p.smart},
+    {t:'ปิดหนี้ดอกเบี้ยสูงก่อน',d:`หนี้ ${baht(p.debt)} ดอกเบี้ย ${p.drate}%`,ch:{debtfirst:true},hide:p.debtfirst||p.debt===0},
+    {t:'ลงทุนเสี่ยงสูงขึ้นหนึ่งระดับ',d:'เพิ่มสัดส่วนหุ้น',ch:{risk:p.risk==='0.7'?'1':'1.25'},hide:p.risk==='1.25'}
+  ].filter(w=>!w.hide);
+  $("wis").innerHTML=W.map((w,i)=>{const q=simulate({...p,...w.ch}).p, d=Math.round((q-s)*100);
+    const c=d>0?'up':d<0?'down':'flat';
+    return `<button type="button" class="wi" id="wi-${i}" data-i="${i}"><span><span class="t">${w.t}</span>${w.d?`<br><span class="d">${w.d}</span>`:''}</span><span class="delta ${c}">${d>0?'+':''}${d}%</span></button>`}).join('');
+  $("wis").querySelectorAll('.wi').forEach(b=>b.onclick=()=>{const w=W[+b.dataset.i];write({...read(),...w.ch});clearPersona();render()});
+}
+function drawFan(p,base){
+  const svg=$("fan"), Wd=680,H=300,L=58,Rm=16,Tp=30,B=34;
+  const T=Math.min(base.T,100-p.age);
+  const P=[0.1,0.25,0.5,0.75,0.9].map(()=>[]);
+  for(let t=0;t<=T;t++){const col=new Float64Array(N);for(let i=0;i<N;i++)col[i]=base.wealth[i*(base.T+1)+t];
+    const s=Array.from(col).sort((a,b)=>a-b);[0.1,0.25,0.5,0.75,0.9].forEach((q,j)=>P[j].push(s[Math.floor(q*(N-1))]))}
+  let ymax=Math.max(...P[4]), ymin=Math.min(0,Math.min(...P[0]));
+  ymin=Math.max(ymin,-ymax*0.35);
+  const step=niceStep((ymax-ymin)/5); ymax=Math.ceil(ymax/step)*step; ymin=Math.floor(ymin/step)*step;
+  const x=t=>L+(Wd-L-Rm)*t/T, y=v=>Tp+(H-Tp-B)*(1-(Math.max(ymin,Math.min(ymax,v))-ymin)/(ymax-ymin));
+  let h='<g class="chart-grid">';
+  for(let v=ymin;v<=ymax+1;v+=step){h+=`<line x1="${L}" x2="${Wd-Rm}" y1="${y(v)}" y2="${y(v)}"></line><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${(v/1e6).toLocaleString('th-TH',{maximumFractionDigits:1})}</text>`}
+  h+='</g>';
+  const xt=[];for(let a=Math.ceil(p.age/10)*10;a<=p.age+T;a+=10)xt.push(a);
+  xt.forEach(a=>h+=`<text x="${x(a-p.age)}" y="${H-B+18}" text-anchor="middle">${a}</text>`);
+  h+=`<text x="${L}" y="12" text-anchor="start">ล้านบาท</text><text x="${Wd-Rm}" y="${H-4}" text-anchor="end">อายุ</text>`;
+  const area=(lo,hi)=>{let d='M'+x(0)+','+y(hi[0]);for(let t=1;t<=T;t++)d+='L'+x(t)+','+y(hi[t]);for(let t=T;t>=0;t--)d+='L'+x(t)+','+y(lo[t]);return d+'Z'};
+  h+=`<path class="b90" d="${area(P[0],P[4])}"></path><path class="b50" d="${area(P[1],P[3])}"></path>`;
+  let m='M'+x(0)+','+y(P[2][0]);for(let t=1;t<=T;t++)m+='L'+x(t)+','+y(P[2][t]);
+  h+=`<line class="zero" x1="${L}" x2="${Wd-Rm}" y1="${y(0)}" y2="${y(0)}"></line>`;
+  h+=`<path class="med" d="${m}"></path>`;
+  if(p.retage-p.age<=T){const rx=x(p.retage-p.age);h+=`<line class="ret" x1="${rx}" x2="${rx}" y1="${Tp}" y2="${H-B}"></line><text class="lab" x="${rx+6}" y="${Tp+12}">เกษียณ ${p.retage}</text>`}
+  const peak=P[2].indexOf(Math.max(...P[2]));
+  h+=`<circle cx="${x(peak)}" cy="${y(P[2][peak])}" r="4" fill="var(--accent)"></circle><text class="lab" x="${Math.min(x(peak)+8,Wd-150)}" y="${Math.max(y(P[2][peak])-8,Tp+28)}">สูงสุด ${fmtB(P[2][peak])} บาท ที่อายุ ${p.age+peak}</text>`;
+  svg.innerHTML=h;
+}
+function niceStep(raw){const e=Math.pow(10,Math.floor(Math.log10(raw||1)));const f=raw/e;return (f<=1?1:f<=2?2:f<=5?5:10)*e}
+function clearPersona(){document.querySelectorAll('.personas button').forEach(b=>b.setAttribute('aria-pressed','false'))}
+document.querySelectorAll('.personas button').forEach(b=>b.onclick=()=>{clearPersona();b.setAttribute('aria-pressed','true');write(PERSONAS[b.dataset.p]);render()});
+let tm;const onIn=()=>{clearPersona();clearTimeout(tm);ids.forEach(k=>{const el=$(k);$('o-'+k).textContent=outs[k](+el.value);el.style.setProperty('--fill',((el.value-el.min)/(el.max-el.min)*100)+'%');el.setAttribute('aria-valuetext',outs[k](+el.value));});tm=setTimeout(render,60)};
+ids.forEach(k=>$(k).addEventListener('input',onIn));["risk","smart","debtfirst"].forEach(k=>$(k).addEventListener('change',()=>{clearPersona();render()}));
+write(PERSONAS.first);render();
+})();
+</script>
+
+</body>
+</html>
