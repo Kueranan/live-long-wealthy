@@ -75,7 +75,7 @@ if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').
           <div class="group">
             <h3 class="gt">หนี้</h3>
             <div class="field" data-k="debt"><div class="field-top"><label for="n-debt">หนี้คงค้าง<small>บัตรเครดิต / BNPL / สินเชื่อส่วนบุคคล</small></label><span class="num-in"><input id="n-debt" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-debt"><span class="unit">บาท</span></span></div><input type="range" id="debt" min="0" max="500000" step="5000" aria-label="หนี้คงค้าง แถบเลื่อน"><p class="hint" id="hint-debt" role="status"></p></div>
-            <div class="field" data-k="drate"><div class="field-top"><label for="n-drate">ดอกเบี้ยหนี้ต่อปี</label><span class="num-in"><input id="n-drate" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-drate"><span class="unit">%</span></span></div><input type="range" id="drate" min="0" max="33" step="1" aria-label="ดอกเบี้ยหนี้ต่อปี แถบเลื่อน"><p class="hint" id="hint-drate" role="status"></p></div>
+            <div class="field" data-k="drate"><div class="field-top"><label for="n-drate">ดอกเบี้ยหนี้ต่อปี</label><span class="num-in"><input id="n-drate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="hint-drate"><span class="unit">%</span></span></div><input type="range" id="drate" min="0" max="33" step="0.1" aria-label="ดอกเบี้ยหนี้ต่อปี แถบเลื่อน"><p class="hint" id="hint-drate" role="status"></p></div>
             <div class="field" data-k="dpay"><div class="field-top"><label for="n-dpay">ผ่อนหนี้ต่อเดือน</label><span class="num-in"><input id="n-dpay" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-dpay"><span class="unit">บาท</span></span></div><input type="range" id="dpay" min="0" max="30000" step="500" aria-label="ผ่อนหนี้ต่อเดือน แถบเลื่อน"><p class="hint" id="hint-dpay" role="status"></p></div>
           </div>
           <div class="group">
@@ -246,21 +246,34 @@ syncThemeBtn();
 const fmtB=v=>{const a=Math.abs(v);if(a>=1e6)return (v/1e6).toLocaleString('th-TH',{maximumFractionDigits:1})+' ล้าน';return Math.round(v).toLocaleString('th-TH')};
 const baht=v=>fmtB(v)+' บาท';
 const pc=v=>Math.round(v*100)+'%';
-const grp=v=>Math.round(v).toLocaleString('en-US');
+const grp=v=>v.toLocaleString('en-US',{maximumFractionDigits:2});
 
 // --- inputs: every value can be typed or slid; typed values may go past the slider's range
 const ids=["age","income","saving","assets","debt","drate","dpay","retage","spend"];
 const LIM={age:[20,64],income:[0,100000000],saving:[0,100000000],assets:[0,10000000000],debt:[0,1000000000],drate:[0,100],dpay:[0,100000000],retage:[21,75],spend:[1000,100000000]};
 const outs={age:v=>v+' ปี',income:v=>baht(v),saving:v=>baht(v),assets:v=>baht(v),debt:v=>baht(v),drate:v=>v+'%',dpay:v=>baht(v),retage:v=>v+' ปี',spend:v=>baht(v)};
 const $=id=>document.getElementById(id);
-const vals={};
+const vals={}, inputErrors={};
+// Validate the whole entry; never turn a decimal or a negative into different digits.
+function parseTyped(k,text){
+  const raw=text.trim();
+  if(!/^[+-]?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/.test(raw))
+    return {error:'กรอกตัวเลขให้ถูกต้อง (ทศนิยมไม่เกิน 2 ตำแหน่ง) ระบบยังใช้ค่าที่ถูกต้องล่าสุด'};
+  const value=Number(raw.replace(/,/g,''));
+  if(!Number.isFinite(value)||value<0)
+    return {error:'กรอกค่าตั้งแต่ 0 ขึ้นไป ระบบยังใช้ค่าที่ถูกต้องล่าสุด'};
+  if((k==='age'||k==='retage')&&!Number.isInteger(value))
+    return {error:'กรอกอายุเป็นจำนวนเต็ม ระบบยังใช้ค่าที่ถูกต้องล่าสุด'};
+  return {value:clamp(k,value)};
+}
 const clamp=(k,v)=>Math.min(LIM[k][1],Math.max(LIM[k][0],v));
 function setFill(el){const v=Math.min(+el.max,Math.max(+el.min,+el.value));el.style.setProperty('--fill',((v-el.min)/(el.max-el.min)*100)+'%')}
-function showVal(k,skipTyped){const el=$(k),n=$('n-'+k);el.value=vals[k];setFill(el);el.setAttribute('aria-valuetext',outs[k](vals[k]));if(!skipTyped)n.value=grp(vals[k])}
+function showVal(k,skipTyped){const el=$(k),n=$('n-'+k);el.value=vals[k];setFill(el);el.setAttribute('aria-valuetext',outs[k](vals[k]));if(!skipTyped){n.value=grp(vals[k]);delete inputErrors[k]}}
 function read(){const p={};ids.forEach(k=>p[k]=vals[k]);p.risk=$("risk").value;p.smart=$("smart").checked;p.debtfirst=$("debtfirst").checked;if(p.retage<=p.age)p.retage=p.age+1;return p}
 function write(p){ids.forEach(k=>{vals[k]=clamp(k,+p[k]);showVal(k)});$("risk").value=p.risk;$("smart").checked=p.smart;$("debtfirst").checked=p.debtfirst}
 function hints(){
-  const h=(k,msg)=>{const e=$('hint-'+k);e.textContent=msg||'';e.classList.toggle('on',!!msg);$('n-'+k).closest('.num-in').classList.toggle('warn',!!msg)};
+  const h=(k,msg)=>{msg=inputErrors[k]||msg;const e=$('hint-'+k),n=$('n-'+k);e.textContent=msg||'';e.classList.toggle('on',!!msg);n.closest('.num-in').classList.toggle('warn',!!msg);n.setAttribute('aria-invalid',inputErrors[k]?'true':'false');n.setCustomValidity(inputErrors[k]||'')};
+  ids.forEach(k=>h(k,''));
   h('saving',vals.saving>vals.income&&vals.income>0?'เงินออมมากกว่ารายได้ ลองตรวจตัวเลขอีกครั้ง':'');
   h('dpay',vals.debt>0&&vals.drate>0&&vals.dpay*12<=vals.debt*vals.drate/100?'ค่างวดไม่พอจ่ายดอกเบี้ย หนี้จะเพิ่มขึ้นทุกปี':'');
   h('retage',vals.retage<=vals.age?'อายุเกษียณต้องมากกว่าอายุปัจจุบัน ระบบใช้ '+(vals.age+1)+' ปีแทน':'');
@@ -320,7 +333,7 @@ function render(){
   const W=[
     {t:'ออมเพิ่มเดือนละ 500 บาท',d:'เท่ากับกาแฟราว 4 แก้ว',ch:{saving:p.saving+500}},
     {t:'ออมเพิ่มเดือนละ 2,000 บาท',d:'',ch:{saving:p.saving+2000}},
-    {t:'เกษียณช้าลง 3 ปี',d:`อายุ ${p.retage+3} ปี`,ch:{retage:Math.min(70,p.retage+3)}},
+    {t:'เกษียณช้าลง 3 ปี',d:`อายุ ${p.retage+3} ปี`,ch:{retage:p.retage+3},hide:p.retage+3>LIM.retage[1]},
     {t:'ลดค่าใช้จ่ายหลังเกษียณ 10%',d:baht(Math.round(p.spend*0.9/1000)*1000)+'/เดือน',ch:{spend:Math.round(p.spend*0.9/1000)*1000}},
     {t:'เปิด Save More Tomorrow',d:'เพิ่มอัตราออมปีละ 1%',ch:{smart:true},hide:p.smart},
     {t:'ปิดหนี้ดอกเบี้ยสูงก่อน',d:`หนี้ ${baht(p.debt)} ดอกเบี้ย ${p.drate}%`,ch:{debtfirst:true},hide:p.debtfirst||p.debt===0},
@@ -531,8 +544,14 @@ let tm;const later=ms=>{hideApplied();clearTimeout(tm);tm=setTimeout(render,ms)}
 ids.forEach(k=>{
   const el=$(k), n=$('n-'+k);
   el.addEventListener('input',()=>{clearPersona();vals[k]=+el.value;showVal(k);hints();later(60)});
-  n.addEventListener('input',()=>{const digits=n.value.replace(/[^\d]/g,'');if(digits==='')return;clearPersona();vals[k]=clamp(k,+digits);showVal(k,true);hints();later(260)});
-  n.addEventListener('blur',()=>{const digits=n.value.replace(/[^\d]/g,'');if(digits!=='')vals[k]=clamp(k,+digits);showVal(k);hints();later(0)});
+  const acceptTyped=final=>{
+    const parsed=parseTyped(k,n.value);
+    if(parsed.error){inputErrors[k]=parsed.error;hints();return}
+    delete inputErrors[k];clearPersona();vals[k]=parsed.value;
+    showVal(k,!final);hints();later(final?0:260);
+  };
+  n.addEventListener('input',()=>acceptTyped(false));
+  n.addEventListener('blur',()=>acceptTyped(true));
   n.addEventListener('keydown',e=>{
     if(e.key==='Enter'){n.blur();return}
     if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();const st=+el.step*(e.shiftKey?10:1);vals[k]=clamp(k,vals[k]+(e.key==='ArrowUp'?st:-st));clearPersona();showVal(k);hints();later(120)}
