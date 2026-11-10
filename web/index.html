@@ -4,127 +4,166 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Live Long Wealthy</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="วางแผนการเงินตลอดชีวิต จำลองอนาคต 2,000 เส้นทางเพื่อตอบคำถามเดียว: เงินของคุณจะพอใช้ไปตลอดชีวิตหรือไม่">
+<meta name="theme-color" content="#F4F6F9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0F1A" media="(prefers-color-scheme: dark)">
+<script>
+/* theme before first paint: saved choice wins, otherwise follow the device */
+(function(){try{var t=localStorage.getItem('llw-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}
+if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('js-motion')})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="./styles.css">
 </head>
-<body class="antialiased">
+<body>
 <a href="#results" class="skip-link">ข้ามไปดูผลการจำลอง</a>
 
-<div class="mx-auto flex max-w-[1440px] flex-col gap-6 lg:gap-8">
-  <nav class="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--line)] pb-5" aria-label="เมนูหลัก">
-    <a href="#" class="flex items-center gap-3 font-semibold text-lg no-underline text-[var(--ink)]">
-      <svg class="brand-mark" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="10" fill="currentColor"/><path d="M10 11v15h17M15 21l5-6 6 2M26 17v-6h-6" stroke="var(--card)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<header class="topbar">
+  <div class="topbar-in">
+    <a href="#" class="brand">
+      <svg class="brand-mark" width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="9" fill="currentColor"/><path d="M10 11v15h17M15 21l5-6 6 2M26 17v-6h-6" stroke="var(--on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Live Long Wealthy
     </a>
-    <div class="flex items-center gap-5 text-sm"><a class="nav-link" href="#planner">วางแผนการเงิน</a><a class="nav-link" href="#theory">แนวคิดเบื้องหลัง</a></div>
-  </nav>
-  <header class="flex flex-col gap-4 py-3 sm:py-5 lg:flex-row lg:items-end lg:justify-between">
-    <div class="max-w-xl"><h1>วางแผนวันนี้<br><span class="text-[var(--accent)]">เพื่อชีวิตที่มั่นใจขึ้น</span></h1></div>
-    <p class="tag lg:max-w-md">แพลตฟอร์มวางแผนการเงินตลอดชีวิต จำลองอนาคต 2,000 เส้นทางเพื่อตอบคำถามเดียว: เงินของคุณจะพอใช้ไปตลอดชีวิตหรือไม่</p>
-  </header>
+    <nav class="topnav" aria-label="เมนูหลัก">
+      <a class="nav-link" href="#planner">วางแผนการเงิน</a>
+      <a class="nav-link" href="#theory">แนวคิดเบื้องหลัง</a>
+      <button type="button" class="theme-btn" id="theme-btn" aria-label="สลับเป็นโหมดมืด">
+        <svg class="i-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        <svg class="i-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 
-  <div id="planner" class="grid grid-cols-1 items-start gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
+<div class="page">
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="hero-copy">
+      <h1 id="h-hero">วางแผนวันนี้<br><span class="hero-accent">เพื่อชีวิตที่มั่นใจขึ้น</span></h1>
+      <p class="tag">แพลตฟอร์มวางแผนการเงินตลอดชีวิต จำลองอนาคต 2,000 เส้นทางเพื่อตอบคำถามเดียว: เงินของคุณจะพอใช้ไปตลอดชีวิตหรือไม่</p>
+      <a class="btn-primary" href="#planner">เริ่มวางแผนของคุณ<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5"/></svg></a>
+    </div>
+    <figure class="hero-viz">
+      <canvas id="futures" role="img" aria-label="ภาพสามมิติของเส้นทางความมั่งคั่งในอนาคตที่จำลองจากแผนนี้"></canvas>
+      <figcaption class="viz-legend"><span><i class="lg-good"></i>เงินพอใช้ถึงอายุ 90</span><span><i class="lg-bad"></i>เงินหมดก่อนอายุ 90</span><span class="viz-note"><span id="viz-note"></span> · ลากเพื่อหมุน</span></figcaption>
+    </figure>
+  </section>
 
-    <aside class="flex min-w-0 flex-col gap-5">
-      <section class="panel group" aria-labelledby="h-who">
+  <div id="planner" class="planner">
+
+    <aside class="rail">
+      <section class="panel" aria-labelledby="h-who">
         <h2 id="h-who">ตัวอย่างผู้ใช้</h2>
         <div class="personas" role="group" aria-label="เลือกตัวอย่างผู้ใช้">
-          <button type="button" id="p-first" data-p="first" aria-pressed="true">First jobber<br><small>อายุ 23</small></button>
-          <button type="button" id="p-work" data-p="work" aria-pressed="false">วัยทำงาน<br><small>อายุ 35</small></button>
-          <button type="button" id="p-pre" data-p="pre" aria-pressed="false">ใกล้เกษียณ<br><small>อายุ 55</small></button>
+          <button type="button" id="p-first" data-p="first" aria-pressed="true"><span>First jobber</span><small>อายุ 23</small></button>
+          <button type="button" id="p-work" data-p="work" aria-pressed="false"><span>วัยทำงาน</span><small>อายุ 35</small></button>
+          <button type="button" id="p-pre" data-p="pre" aria-pressed="false"><span>ใกล้เกษียณ</span><small>อายุ 55</small></button>
         </div>
         <p class="sub">ตัวเลขเริ่มต้นเป็นข้อมูลตัวอย่าง ปรับให้ตรงกับตัวคุณได้</p>
       </section>
 
       <details class="panel input-details" id="financial-inputs" open>
-        <summary id="h-in">ข้อมูลการเงินวันนี้ <span class="sub">แก้ไขข้อมูล</span></summary>
+        <summary id="h-in">ข้อมูลการเงินวันนี้ <span class="sum-hint">แก้ไขข้อมูล</span></summary>
         <div class="input-content">
-        <div class="group">
-          <div class="field"><div class="row"><label for="age">อายุ</label><output id="o-age"></output></div><input type="range" id="age" min="20" max="64" step="1"></div>
-          <div class="field"><div class="row"><label for="income">รายได้ต่อเดือน</label><output id="o-income"></output></div><input type="range" id="income" min="10000" max="200000" step="1000"></div>
-          <div class="field"><div class="row"><label for="saving">เงินออม/ลงทุนต่อเดือน</label><output id="o-saving"></output></div><input type="range" id="saving" min="0" max="60000" step="500"></div>
-          <div class="field"><div class="row"><label for="assets">เงินเก็บที่มีอยู่</label><output id="o-assets"></output></div><input type="range" id="assets" min="0" max="10000000" step="5000"></div>
-        </div>
-        <div class="group">
-          <span class="gt">หนี้</span>
-          <div class="field"><div class="row"><label for="debt">หนี้คงค้าง (บัตรเครดิต / BNPL / สินเชื่อส่วนบุคคล)</label><output id="o-debt"></output></div><input type="range" id="debt" min="0" max="500000" step="5000"></div>
-          <div class="field"><div class="row"><label for="drate">ดอกเบี้ยหนี้ต่อปี</label><output id="o-drate"></output></div><input type="range" id="drate" min="0" max="33" step="1"></div>
-          <div class="field"><div class="row"><label for="dpay">ผ่อนหนี้ต่อเดือน</label><output id="o-dpay"></output></div><input type="range" id="dpay" min="0" max="30000" step="500"></div>
-        </div>
-        <div class="group">
-          <span class="gt">เป้าหมายเกษียณ</span>
-          <div class="field"><div class="row"><label for="retage">อายุเกษียณ</label><output id="o-retage"></output></div><input type="range" id="retage" min="45" max="70" step="1"></div>
-          <div class="field"><div class="row"><label for="spend">ค่าใช้จ่ายหลังเกษียณต่อเดือน (มูลค่าวันนี้)</label><output id="o-spend"></output></div><input type="range" id="spend" min="5000" max="150000" step="1000"></div>
-          <div class="field"><label for="risk">ระดับความเสี่ยงที่รับได้</label>
-            <select id="risk"><option value="0.7">ระมัดระวัง</option><option value="1" selected>ปานกลาง</option><option value="1.25">รับความเสี่ยงได้สูง</option></select></div>
-        </div>
-        <div class="group">
-          <span class="gt">กลยุทธ์</span>
-          <label class="toggle" for="smart"><input type="checkbox" id="smart"><span>Save More Tomorrow<small>เพิ่มอัตราออมปีละ 1% ของรายได้ จนเพิ่มขึ้นรวม 10%</small></span></label>
-          <label class="toggle" for="debtfirst"><input type="checkbox" id="debtfirst"><span>ปิดหนี้ดอกเบี้ยสูงก่อน<small>นำเงินออมไปโปะหนี้จนหมด แล้วค่อยลงทุน</small></span></label>
-        </div>
+          <div class="group">
+            <div class="field" data-k="age"><div class="field-top"><label for="n-age">อายุ</label><span class="num-in"><input id="n-age" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-age"><span class="unit">ปี</span></span></div><input type="range" id="age" min="20" max="64" step="1" aria-label="อายุ แถบเลื่อน"><p class="hint" id="hint-age" role="status"></p></div>
+            <div class="field" data-k="income"><div class="field-top"><label for="n-income">รายได้ต่อเดือน</label><span class="num-in"><input id="n-income" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-income"><span class="unit">บาท</span></span></div><input type="range" id="income" min="10000" max="200000" step="1000" aria-label="รายได้ต่อเดือน แถบเลื่อน"><p class="hint" id="hint-income" role="status"></p></div>
+            <div class="field" data-k="saving"><div class="field-top"><label for="n-saving">เงินออม/ลงทุนต่อเดือน</label><span class="num-in"><input id="n-saving" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-saving"><span class="unit">บาท</span></span></div><input type="range" id="saving" min="0" max="60000" step="500" aria-label="เงินออมต่อเดือน แถบเลื่อน"><p class="hint" id="hint-saving" role="status"></p></div>
+            <div class="field" data-k="assets"><div class="field-top"><label for="n-assets">เงินเก็บที่มีอยู่</label><span class="num-in"><input id="n-assets" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-assets"><span class="unit">บาท</span></span></div><input type="range" id="assets" min="0" max="10000000" step="5000" aria-label="เงินเก็บที่มีอยู่ แถบเลื่อน"><p class="hint" id="hint-assets" role="status"></p></div>
+          </div>
+          <div class="group">
+            <h3 class="gt">หนี้</h3>
+            <div class="field" data-k="debt"><div class="field-top"><label for="n-debt">หนี้คงค้าง<small>บัตรเครดิต / BNPL / สินเชื่อส่วนบุคคล</small></label><span class="num-in"><input id="n-debt" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-debt"><span class="unit">บาท</span></span></div><input type="range" id="debt" min="0" max="500000" step="5000" aria-label="หนี้คงค้าง แถบเลื่อน"><p class="hint" id="hint-debt" role="status"></p></div>
+            <div class="field" data-k="drate"><div class="field-top"><label for="n-drate">ดอกเบี้ยหนี้ต่อปี</label><span class="num-in"><input id="n-drate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="hint-drate"><span class="unit">%</span></span></div><input type="range" id="drate" min="0" max="33" step="0.1" aria-label="ดอกเบี้ยหนี้ต่อปี แถบเลื่อน"><p class="hint" id="hint-drate" role="status"></p></div>
+            <div class="field" data-k="dpay"><div class="field-top"><label for="n-dpay">ผ่อนหนี้ต่อเดือน</label><span class="num-in"><input id="n-dpay" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-dpay"><span class="unit">บาท</span></span></div><input type="range" id="dpay" min="0" max="30000" step="500" aria-label="ผ่อนหนี้ต่อเดือน แถบเลื่อน"><p class="hint" id="hint-dpay" role="status"></p></div>
+          </div>
+          <div class="group">
+            <h3 class="gt">เป้าหมายเกษียณ</h3>
+            <div class="field" data-k="retage"><div class="field-top"><label for="n-retage">อายุเกษียณ</label><span class="num-in"><input id="n-retage" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-retage"><span class="unit">ปี</span></span></div><input type="range" id="retage" min="45" max="70" step="1" aria-label="อายุเกษียณ แถบเลื่อน"><p class="hint" id="hint-retage" role="status"></p></div>
+            <div class="field" data-k="spend"><div class="field-top"><label for="n-spend">ค่าใช้จ่ายหลังเกษียณต่อเดือน<small>มูลค่าเงินวันนี้</small></label><span class="num-in"><input id="n-spend" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-spend"><span class="unit">บาท</span></span></div><input type="range" id="spend" min="5000" max="150000" step="1000" aria-label="ค่าใช้จ่ายหลังเกษียณ แถบเลื่อน"><p class="hint" id="hint-spend" role="status"></p></div>
+            <div class="field"><label for="risk">ระดับความเสี่ยงที่รับได้</label>
+              <select id="risk"><option value="0.7">ระมัดระวัง</option><option value="1" selected>ปานกลาง</option><option value="1.25">รับความเสี่ยงได้สูง</option></select></div>
+          </div>
+          <div class="group">
+            <h3 class="gt">กลยุทธ์</h3>
+            <label class="toggle" for="smart"><input type="checkbox" id="smart"><span>Save More Tomorrow<small>เพิ่มอัตราออมปีละ 1% ของรายได้ จนเพิ่มขึ้นรวม 10%</small></span></label>
+            <label class="toggle" for="debtfirst"><input type="checkbox" id="debtfirst"><span>ปิดหนี้ดอกเบี้ยสูงก่อน<small>นำเงินออมไปโปะหนี้จนหมด แล้วค่อยลงทุน</small></span></label>
+          </div>
         </div>
       </details>
     </aside>
 
-    <main id="results" tabindex="-1" class="flex min-w-0 scroll-mt-6 flex-col gap-6">
-      <div class="flex flex-wrap items-center justify-between gap-2"><h2>ภาพรวมแผนของคุณ</h2><span class="sub flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[var(--good)]" aria-hidden="true"></span>ปรับข้อมูลเพื่อจำลองผลใหม่</span></div>
-      <section class="panel verdict" aria-live="polite" aria-label="ผลการจำลองแผนการเงิน">
+    <main id="results" tabindex="-1" class="results">
+      <div class="results-head"><h2>ภาพรวมแผนของคุณ</h2><span class="sub live-note"><span class="live-dot" aria-hidden="true"></span>ปรับข้อมูลเพื่อจำลองผลใหม่</span></div>
+
+      <section class="verdict" id="verdict" aria-live="polite" aria-label="ผลการจำลองแผนการเงิน">
         <div class="gauge">
           <svg viewBox="0 0 120 120" aria-hidden="true">
-            <circle cx="60" cy="60" r="50" fill="none" stroke="var(--line)" stroke-width="10"></circle>
-            <circle class="arc" id="arc" cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+            <circle class="track" cx="60" cy="60" r="50" fill="none" stroke-width="9"></circle>
+            <circle class="arc" id="arc" cx="60" cy="60" r="50" fill="none" stroke-width="9" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
           </svg>
           <div class="val"><span class="pct" id="pct">–</span><span class="lbl">โอกาสที่เงินพอใช้<br>ตลอดชีวิต</span></div>
         </div>
         <div class="story">
           <span id="status" class="pill"></span>
           <p class="lead" id="lead"></p>
-          <p class="sub" id="lead2"></p>
+          <p class="lead2" id="lead2"></p>
         </div>
       </section>
 
-      <section class="panel">
-        <div class="cards-head"><h2>ตัวเราในอนาคต</h2><span class="sub">มูลค่าเงินคิดเป็นอำนาจซื้อของวันนี้</span></div>
-        <div class="grid grid-cols-1 divide-y divide-[var(--line)] md:grid-cols-3 md:divide-x md:divide-y-0" id="selves"></div>
+      <div class="chapter reveal" aria-live="off"><p class="ch-line" id="ch-future"></p><p class="ch-sub" id="ch-future-sub"></p></div>
+
+      <section class="panel" aria-labelledby="h-selves">
+        <div class="cards-head"><h2 id="h-selves">ตัวเราในอนาคต</h2><span class="sub">มูลค่าเงินคิดเป็นอำนาจซื้อของวันนี้</span></div>
+        <div class="life" id="life" aria-hidden="true"></div>
+        <div class="selves" id="selves"></div>
       </section>
 
-      <section class="panel">
-        <div class="cards-head"><h2>ความมั่งคั่งตลอดชีวิต</h2><span class="sub">ช่วงของ 2,000 อนาคตที่จำลอง</span></div>
-        <div class="chartwrap" tabindex="0" role="region" aria-label="กราฟความมั่งคั่ง เลื่อนแนวนอนเพื่อดูอายุทั้งหมด"><svg class="fan" id="fan" viewBox="0 0 680 300" role="img" aria-label="กราฟช่วงความมั่งคั่งตามอายุ"></svg></div>
-        <p class="sub mt-3 sm:hidden">เลื่อนกราฟซ้าย–ขวาเพื่อดูทุกช่วงอายุ</p>
+      <section class="panel reveal" aria-labelledby="h-fan">
+        <div class="cards-head"><h2 id="h-fan">ความมั่งคั่งตลอดชีวิต</h2><span class="sub">ช่วงของ 2,000 อนาคตที่จำลอง</span></div>
+        <div class="chartwrap" id="chartwrap" tabindex="0" role="region" aria-label="กราฟความมั่งคั่ง ใช้ปุ่มลูกศรซ้ายขวาเพื่อดูแต่ละอายุ">
+          <svg class="fan" id="fan" viewBox="0 0 680 300" role="img" aria-label="กราฟช่วงความมั่งคั่งตามอายุ"></svg>
+          <div class="tip" id="tip" hidden></div>
+        </div>
+        <p class="sub chart-help">ชี้หรือแตะบนกราฟเพื่อดูตัวเลขแต่ละอายุ</p>
         <div class="legend">
           <span><i style="background:var(--band2)"></i>80% ของอนาคต (P10–P90)</span>
           <span><i style="background:var(--band)"></i>50% ของอนาคต (P25–P75)</span>
           <span><i style="background:var(--accent);height:3px"></i>ค่ากลาง</span>
-          <span><i style="border-top:2px dashed var(--warn);height:0"></i>อายุเกษียณ</span>
+          <span><i class="lg-ret"></i>อายุเกษียณ</span>
         </div>
       </section>
 
-      <section class="panel">
-        <div class="cards-head"><h2>ลองปรับดู แล้วเห็นผลทันที</h2><span class="sub">กดเพื่อนำไปใช้กับแผน</span></div>
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-2" id="wis"></div>
+      <div class="chapter reveal"><p class="ch-line">การเปลี่ยนเล็กๆ วันนี้ <em>เปลี่ยนอนาคตได้</em></p><p class="ch-sub" id="ch-change-sub"></p></div>
+
+      <section class="panel reveal" aria-labelledby="h-wis">
+        <div class="cards-head"><h2 id="h-wis">ลองปรับดู แล้วเห็นผลทันที</h2><span class="sub">กดเพื่อนำไปใช้กับแผน</span></div>
+        <div class="applied" id="applied" role="status" hidden></div>
+        <div class="wis" id="wis"></div>
       </section>
 
-      <section class="panel" id="theory">
-        <h2 class="mb-6">ทฤษฎีที่อยู่เบื้องหลัง</h2>
-        <div class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-          <div class="th"><b>Life-Cycle Hypothesis</b><span>Modigliani (1954) ออมช่วงมีรายได้ ใช้ช่วงเกษียณ แผนจึงแบ่งเป็นช่วงสะสมและช่วงใช้เงิน</span></div>
-          <div class="th"><b>Human Capital + MPT</b><span>Ibbotson et al. (2007), Markowitz (1952) สัดส่วนหุ้นลดลงตามอายุ (glide path) เมื่อรายได้ในอนาคตเหลือน้อยลง</span></div>
-          <div class="th"><b>Longevity risk</b><span>Yaari (1965) อายุขัยเป็นการแจกแจงแบบ Gompertz ไม่ใช่ตัวเลขเดียว</span></div>
-          <div class="th"><b>Monte Carlo + Bayesian</b><span>ผลตอบแทนคาดหวังของแต่ละเส้นทางสุ่มจากการแจกแจงก่อนหน้า (prior) จึงรวมความไม่แน่นอนของพารามิเตอร์ด้วย</span></div>
-          <div class="th"><b>Safe Withdrawal Rate</b><span>Bengen (1994) หาค่าใช้จ่ายสูงสุดที่เงินยังพอใช้ในอย่างน้อย 85% ของอนาคต</span></div>
-          <div class="th"><b>Behavioral Finance</b><span>Hershfield et al. (2011) ภาพตัวเราในอนาคต และ Thaler &amp; Benartzi (2004) Save More Tomorrow</span></div>
+      <div class="chapter reveal"><p class="ch-line">ตัวเลขทั้งหมดนี้ <em>มาจากไหน</em></p><p class="ch-sub">แบบจำลองนี้ต่อยอดจากงานวิจัยด้านการเงินที่ได้รับการยอมรับ</p></div>
+
+      <section class="panel reveal" id="theory" aria-labelledby="h-theory">
+        <h2 id="h-theory" class="theory-h">ทฤษฎีที่อยู่เบื้องหลัง</h2>
+        <div class="theory">
+          <div class="th" style="--i:0"><b>Life-Cycle Hypothesis</b><span>Modigliani (1954) ออมช่วงมีรายได้ ใช้ช่วงเกษียณ แผนจึงแบ่งเป็นช่วงสะสมและช่วงใช้เงิน</span></div>
+          <div class="th" style="--i:1"><b>Human Capital + MPT</b><span>Ibbotson et al. (2007), Markowitz (1952) สัดส่วนหุ้นลดลงตามอายุ (glide path) เมื่อรายได้ในอนาคตเหลือน้อยลง</span></div>
+          <div class="th" style="--i:2"><b>Longevity risk</b><span>Yaari (1965) อายุขัยเป็นการแจกแจงแบบ Gompertz ไม่ใช่ตัวเลขเดียว</span></div>
+          <div class="th" style="--i:3"><b>Monte Carlo + Bayesian</b><span>ผลตอบแทนคาดหวังของแต่ละเส้นทางสุ่มจากการแจกแจงก่อนหน้า (prior) จึงรวมความไม่แน่นอนของพารามิเตอร์ด้วย</span></div>
+          <div class="th" style="--i:4"><b>Safe Withdrawal Rate</b><span>Bengen (1994) หาค่าใช้จ่ายสูงสุดที่เงินยังพอใช้ในอย่างน้อย 85% ของอนาคต</span></div>
+          <div class="th" style="--i:5"><b>Behavioral Finance</b><span>Hershfield et al. (2011) ภาพตัวเราในอนาคต และ Thaler &amp; Benartzi (2004) Save More Tomorrow</span></div>
         </div>
       </section>
 
       <p class="foot">ต้นแบบเพื่อการแข่งขัน ใช้สมมติฐานอย่างง่าย: ผลตอบแทนหุ้นคาดหวัง 7.5%/ปี (ผันผวน 17%) ตราสารหนี้ 3% (ผันผวน 5%) เงินเฟ้อเฉลี่ย 2.5% รายได้จริงเพิ่มปีละ 2% อายุขัยตามแบบจำลอง Gompertz ที่ค่ากลางราว 82 ปี และค่ารักษาพยาบาลเพิ่มขึ้น 1.5% ของค่าใช้จ่ายต่อปีหลังอายุ 60 ผลลัพธ์ไม่ใช่คำแนะนำการลงทุน</p>
     </main>
   </div>
-  <footer class="flex flex-wrap justify-between gap-3 border-t border-[var(--line)] pt-5 text-xs text-[var(--muted)]"><span>Live Long Wealthy · วางแผนการเงินตลอดชีวิต</span><span>Trinity Hackathon 2026 · Track 2 Wealth for Everyone</span></footer>
+  <footer class="site-foot"><span>Live Long Wealthy · วางแผนการเงินตลอดชีวิต</span><span>Trinity Hackathon 2026 · Track 2 Wealth for Everyone</span></footer>
 </div>
+
+<a href="#verdict" class="dock" id="dock" aria-hidden="true" tabindex="-1"><span class="dock-pct" id="dock-pct">–</span><span class="dock-txt"><b id="dock-status"></b><small>โอกาสที่เงินพอใช้ตลอดชีวิต</small></span></a>
 
 <script>
 (function(){
@@ -191,65 +230,165 @@ function simulate(p,opts){
 function quant(arr,q){const a=Array.from(arr).sort((x,y)=>x-y);if(!a.length)return NaN;const i=(a.length-1)*q,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo)}
 function safeSpend(p){let lo=1000,hi=Math.max(20000,p.spend*4);for(let j=0;j<14;j++){const m=(lo+hi)/2;const s=simulate({...p,spend:m}).p;if(s>=0.85)lo=m;else hi=m}return lo}
 
+// ===== presentation layer (model above is unchanged) =====
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// --- theme toggle: follows the device until the visitor picks one
+const root=document.documentElement, themeBtn=document.getElementById('theme-btn');
+const sysDark=matchMedia('(prefers-color-scheme: dark)');
+function effTheme(){const t=root.getAttribute('data-theme');return t||(sysDark.matches?'dark':'light')}
+function syncThemeBtn(){const d=effTheme()==='dark';themeBtn.setAttribute('aria-label',d?'สลับเป็นโหมดสว่าง':'สลับเป็นโหมดมืด');themeBtn.title=themeBtn.getAttribute('aria-label');root.classList.toggle('is-dark',d)}
+themeBtn.addEventListener('click',()=>{const next=effTheme()==='dark'?'light':'dark';root.classList.add('theme-anim');root.setAttribute('data-theme',next);try{localStorage.setItem('llw-theme',next)}catch(e){}syncThemeBtn();setTimeout(()=>root.classList.remove('theme-anim'),400)});
+sysDark.addEventListener('change',syncThemeBtn);
+syncThemeBtn();
+
 // --- formatting
 const fmtB=v=>{const a=Math.abs(v);if(a>=1e6)return (v/1e6).toLocaleString('th-TH',{maximumFractionDigits:1})+' ล้าน';return Math.round(v).toLocaleString('th-TH')};
 const baht=v=>fmtB(v)+' บาท';
 const pc=v=>Math.round(v*100)+'%';
+const grp=v=>v.toLocaleString('en-US',{maximumFractionDigits:2});
 
-// --- inputs
+// --- inputs: every value can be typed or slid; typed values may go past the slider's range
 const ids=["age","income","saving","assets","debt","drate","dpay","retage","spend"];
+const LIM={age:[20,64],income:[0,100000000],saving:[0,100000000],assets:[0,10000000000],debt:[0,1000000000],drate:[0,100],dpay:[0,100000000],retage:[21,75],spend:[1000,100000000]};
 const outs={age:v=>v+' ปี',income:v=>baht(v),saving:v=>baht(v),assets:v=>baht(v),debt:v=>baht(v),drate:v=>v+'%',dpay:v=>baht(v),retage:v=>v+' ปี',spend:v=>baht(v)};
 const $=id=>document.getElementById(id);
-function read(){const p={};ids.forEach(k=>p[k]=+$(k).value);p.risk=$("risk").value;p.smart=$("smart").checked;p.debtfirst=$("debtfirst").checked;if(p.retage<=p.age)p.retage=p.age+1;return p}
-function write(p){ids.forEach(k=>{$(k).value=p[k]});$("risk").value=p.risk;$("smart").checked=p.smart;$("debtfirst").checked=p.debtfirst}
+const vals={}, inputErrors={};
+// Validate the whole entry; never turn a decimal or a negative into different digits.
+function parseTyped(k,text){
+  const raw=text.trim();
+  if(!/^[+-]?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/.test(raw))
+    return {error:'กรอกตัวเลขให้ถูกต้อง (ทศนิยมไม่เกิน 2 ตำแหน่ง) ระบบยังใช้ค่าที่ถูกต้องล่าสุด'};
+  const value=Number(raw.replace(/,/g,''));
+  if(!Number.isFinite(value)||value<0)
+    return {error:'กรอกค่าตั้งแต่ 0 ขึ้นไป ระบบยังใช้ค่าที่ถูกต้องล่าสุด'};
+  if((k==='age'||k==='retage')&&!Number.isInteger(value))
+    return {error:'กรอกอายุเป็นจำนวนเต็ม ระบบยังใช้ค่าที่ถูกต้องล่าสุด'};
+  return {value:clamp(k,value)};
+}
+const clamp=(k,v)=>Math.min(LIM[k][1],Math.max(LIM[k][0],v));
+function setFill(el){const v=Math.min(+el.max,Math.max(+el.min,+el.value));el.style.setProperty('--fill',((v-el.min)/(el.max-el.min)*100)+'%')}
+function showVal(k,skipTyped){const el=$(k),n=$('n-'+k);el.value=vals[k];setFill(el);el.setAttribute('aria-valuetext',outs[k](vals[k]));if(!skipTyped){n.value=grp(vals[k]);delete inputErrors[k]}}
+function read(){const p={};ids.forEach(k=>p[k]=vals[k]);p.risk=$("risk").value;p.smart=$("smart").checked;p.debtfirst=$("debtfirst").checked;if(p.retage<=p.age)p.retage=p.age+1;return p}
+function write(p){ids.forEach(k=>{vals[k]=clamp(k,+p[k]);showVal(k)});$("risk").value=p.risk;$("smart").checked=p.smart;$("debtfirst").checked=p.debtfirst}
+function hints(){
+  const h=(k,msg)=>{msg=inputErrors[k]||msg;const e=$('hint-'+k),n=$('n-'+k);e.textContent=msg||'';e.classList.toggle('on',!!msg);n.closest('.num-in').classList.toggle('warn',!!msg);n.setAttribute('aria-invalid',inputErrors[k]?'true':'false');n.setCustomValidity(inputErrors[k]||'')};
+  ids.forEach(k=>h(k,''));
+  h('saving',vals.saving>vals.income&&vals.income>0?'เงินออมมากกว่ารายได้ ลองตรวจตัวเลขอีกครั้ง':'');
+  h('dpay',vals.debt>0&&vals.drate>0&&vals.dpay*12<=vals.debt*vals.drate/100?'ค่างวดไม่พอจ่ายดอกเบี้ย หนี้จะเพิ่มขึ้นทุกปี':'');
+  h('retage',vals.retage<=vals.age?'อายุเกษียณต้องมากกว่าอายุปัจจุบัน ระบบใช้ '+(vals.age+1)+' ปีแทน':'');
+}
+
+// --- motion helpers
+let shownPct=null;
+function tweenPct(to){
+  const el=$("pct"), dock=$("dock-pct");
+  if(shownPct===null&&!verdictSeen){shownPct=to;el.textContent='0%';dock.textContent=pc(to);return}
+  if(REDUCED){shownPct=to;el.textContent=pc(to);dock.textContent=pc(to);return}
+  const from=shownPct===null?0:shownPct, t0=performance.now(), dur=shownPct===null?900:420;shownPct=to;
+  const step=now=>{const k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3), v=from+(to-from)*e;el.textContent=pc(v);dock.textContent=pc(v);if(k<1&&shownPct===to)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+}
+let verdictSeen=!root.classList.contains('js-motion');
 
 function render(){
   const p=read();
-  ids.forEach(k=>{const el=$(k);$('o-'+k).textContent=outs[k](p[k]);el.style.setProperty('--fill',((el.value-el.min)/(el.max-el.min)*100)+'%');el.setAttribute('aria-valuetext',outs[k](p[k]));});
+  hints();
   const base=simulate(p,{keep:true});
   // gauge + verdict
-  const s=base.p; $("pct").textContent=pc(s);
-  $("arc").setAttribute("stroke-dashoffset",(314.16*(1-s)).toFixed(1));
+  const s=base.p;
   const cls=s>=0.8?'good':s>=0.55?'warn':'bad';
-  $("arc").setAttribute("stroke",`var(--${cls==='good'?'good':cls==='warn'?'warn':'bad'})`);
-  const st=$("status");st.className='pill '+cls;st.textContent=cls==='good'?'แผนแข็งแรง':cls==='warn'?'ยังเสี่ยงอยู่บ้าง':'มีโอกาสเงินหมดก่อนชีวิต';
+  const arc=$("arc");arc.setAttribute("class","arc "+cls);
+  if(verdictSeen) arc.setAttribute("stroke-dashoffset",(314.16*(1-s)).toFixed(1));
+  arc.dataset.target=(314.16*(1-s)).toFixed(1);
+  tweenPct(s);
+  const statusTxt=cls==='good'?'แผนแข็งแรง':cls==='warn'?'ยังเสี่ยงอยู่บ้าง':'มีโอกาสเงินหมดก่อนชีวิต';
+  const st=$("status");st.className='pill '+cls;st.textContent=statusTxt;
+  const ds=$("dock-status");ds.textContent=statusTxt;$("dock").className='dock '+cls+($("dock").classList.contains('show')?' show':'');
   const medRuin=quant(base.ruinAges,0.5);
   const life=quant(Array.from(U,u=>deathAge(p.age,u)),0.5);
   const ss=safeSpend(p);
   $("lead").innerHTML=`ถ้าใช้เงินแบบวันนี้ต่อไป คุณมีโอกาส <span class="num">${pc(s)}</span> ที่เงินจะพอใช้ไปตลอดชีวิต`+
     (base.ruinAges.length?` ในอนาคตที่เงินไม่พอ เงินมักหมดตอนอายุราว <span class="num">${Math.round(medRuin)}</span> ปี`:'');
-  $("lead2").innerHTML=`ค่ากลางอายุขัยของคุณราว ${Math.round(life)} ปี แต่มีโอกาส ${pc(survive(p.age,90))} ที่จะอยู่ถึง 90 · หลังเกษียณใช้ได้ไม่เกินราว <b>${baht(ss)}/เดือน</b> เพื่อให้เงินพอในอย่างน้อย 85% ของอนาคต`;
+  $("lead2").innerHTML=`ค่ากลางอายุขัยของคุณราว <span class="num">${Math.round(life)}</span> ปี แต่มีโอกาส <span class="num">${pc(survive(p.age,90))}</span> ที่จะอยู่ถึง 90 · หลังเกษียณใช้ได้ไม่เกินราว <b class="num">${baht(ss)}/เดือน</b> เพื่อให้เงินพอในอย่างน้อย 85% ของอนาคต`;
   // future selves
   const ages=[60,80,90].map(a=>Math.max(a,p.age+1));
-  $("selves").innerHTML=ages.map(a=>{
+  const lefts=[];
+  $("selves").innerHTML=ages.map((a,idx)=>{
     const t=Math.min(base.T,a-p.age); const col=[];let pos=0;
     for(let i=0;i<N;i++){const v=base.wealth[i*(base.T+1)+t];col.push(v);if(v>0)pos++}
-    const alive=survive(p.age,a), med=quant(col,0.5), left=pos/N;
+    const alive=survive(p.age,a), med=quant(col,0.5), left=pos/N; lefts.push(left);
     const phase=a<p.retage?'ยังทำงาน':'เกษียณแล้ว';
-    const monthly=a>=p.retage?Math.max(0,med)/Math.max(1,(Math.round(life>a?life:a+5)-a)*12):null;
-    return `<article class="self"><div class="age">${a}<small>ปี · ${phase}</small></div>
-      <div class="kv"><span>เงินคงเหลือ (ค่ากลาง)</span><span class="num">${med>0?baht(med):'หมดแล้ว'}</span></div>
+    const lc=left>=0.8?'good':left>=0.5?'warn':'bad';
+    return `<article class="self" style="--i:${idx}"><div class="age">${a}<small>ปี · ${phase}</small></div>
+      <div class="money"><span class="k">เงินคงเหลือ (ค่ากลาง)</span><span class="v num">${med>0?baht(med):'หมดแล้ว'}</span></div>
       <div class="kv"><span>โอกาสยังมีเงินเหลือ</span><span class="num">${pc(left)}</span></div>
-      <div class="bar" aria-hidden="true"><i style="width:${(left*100).toFixed(0)}%"></i></div>
+      <div class="bar ${lc}" aria-hidden="true"><i style="width:${(left*100).toFixed(0)}%"></i></div>
       <div class="kv"><span>โอกาสมีชีวิตถึงอายุนี้</span><span class="num">${pc(alive)}</span></div>
       <p class="note">${a<p.retage?'ช่วงสะสมความมั่งคั่ง สัดส่วนหุ้นราว '+pc(Math.min(.9,Math.max(.1,(110-a)/100*+p.risk))):left>=0.8?'ใช้ชีวิตได้ตามแผน':left>=0.5?'ต้องเริ่มลดค่าใช้จ่ายบางส่วน':'มีความเสี่ยงต้องพึ่งลูกหลานหรือสวัสดิการรัฐ'}</p></article>`;
   }).join('');
+  drawLife(p,ages,lefts);
   drawFan(p,base);
   // what-ifs
   const W=[
     {t:'ออมเพิ่มเดือนละ 500 บาท',d:'เท่ากับกาแฟราว 4 แก้ว',ch:{saving:p.saving+500}},
     {t:'ออมเพิ่มเดือนละ 2,000 บาท',d:'',ch:{saving:p.saving+2000}},
-    {t:'เกษียณช้าลง 3 ปี',d:`อายุ ${p.retage+3} ปี`,ch:{retage:Math.min(70,p.retage+3)}},
+    {t:'เกษียณช้าลง 3 ปี',d:`อายุ ${p.retage+3} ปี`,ch:{retage:p.retage+3},hide:p.retage+3>LIM.retage[1]},
     {t:'ลดค่าใช้จ่ายหลังเกษียณ 10%',d:baht(Math.round(p.spend*0.9/1000)*1000)+'/เดือน',ch:{spend:Math.round(p.spend*0.9/1000)*1000}},
     {t:'เปิด Save More Tomorrow',d:'เพิ่มอัตราออมปีละ 1%',ch:{smart:true},hide:p.smart},
     {t:'ปิดหนี้ดอกเบี้ยสูงก่อน',d:`หนี้ ${baht(p.debt)} ดอกเบี้ย ${p.drate}%`,ch:{debtfirst:true},hide:p.debtfirst||p.debt===0},
     {t:'ลงทุนเสี่ยงสูงขึ้นหนึ่งระดับ',d:'เพิ่มสัดส่วนหุ้น',ch:{risk:p.risk==='0.7'?'1':'1.25'},hide:p.risk==='1.25'}
   ].filter(w=>!w.hide);
-  $("wis").innerHTML=W.map((w,i)=>{const q=simulate({...p,...w.ch}).p, d=Math.round((q-s)*100);
+  const deltas=W.map(w=>Math.round((simulate({...p,...w.ch}).p-s)*100));
+  $("wis").innerHTML=W.map((w,i)=>{const d=deltas[i];
     const c=d>0?'up':d<0?'down':'flat';
-    return `<button type="button" class="wi" id="wi-${i}" data-i="${i}"><span><span class="t">${w.t}</span>${w.d?`<br><span class="d">${w.d}</span>`:''}</span><span class="delta ${c}">${d>0?'+':''}${d}%</span></button>`}).join('');
-  $("wis").querySelectorAll('.wi').forEach(b=>b.onclick=()=>{const w=W[+b.dataset.i];write({...read(),...w.ch});clearPersona();render()});
+    return `<button type="button" class="wi" id="wi-${i}" data-i="${i}" style="--i:${i}"><span class="wi-main"><span class="wi-txt"><span class="t">${w.t}</span>${w.d?`<span class="d">${w.d}</span>`:''}</span><span class="delta ${c}">${d>0?'+':''}${d}%</span></span><span class="wi-act">นำไปใช้<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M8.5 3.5 13 8l-4.5 4.5"/></svg></span></button>`}).join('');
+  $("wis").querySelectorAll('.wi').forEach(b=>b.onclick=()=>{const w=W[+b.dataset.i];const before=read(), sBefore=s;write({...before,...w.ch});clearPersona();render();showApplied(w.t,before,sBefore)});
+  // story chapters, written from this plan's own numbers
+  const a0=ages[0], m0=quant(Array.from({length:N},(_,i)=>base.wealth[i*(base.T+1)+Math.min(base.T,a0-p.age)]),0.5);
+  $("ch-future").innerHTML=m0>0?`อายุ ${a0} คุณจะมีเงินราว <em>${baht(m0)}</em>`:`อายุ ${a0} เงินของคุณ <em>มีโอกาสหมดแล้ว</em>`;
+  $("ch-future-sub").textContent=`และมีโอกาส ${pc(lefts[2])} ที่ถึงอายุ ${ages[2]} เงินจะยังเหลืออยู่`;
+  let bi=-1;deltas.forEach((d,i)=>{if(d>0&&(bi<0||d>deltas[bi]))bi=i});
+  $("ch-change-sub").textContent=bi>=0?`ทางเลือกที่ได้ผลที่สุดสำหรับแผนนี้คือ “${W[bi].t}” เพิ่มโอกาสได้ +${deltas[bi]}%`:'แผนนี้แข็งแรงอยู่แล้ว ลองดูว่าแต่ละทางเลือกส่งผลอย่างไร';
+  lastS=s;
+  setFutures(p,base);
 }
+let lastS=0;
+function showApplied(label,before,sBefore){
+  const el=$("applied");
+  el.innerHTML=`<span class="ap-ic" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.5 3 3 6-7"/></svg></span><span class="ap-txt">ใช้ “${label}” แล้ว · โอกาส <span class="num">${pc(sBefore)}</span> → <span class="num">${pc(lastS)}</span></span><button type="button" class="ap-undo" id="ap-undo">ยกเลิก</button>`;
+  el.hidden=false;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');
+  $("ap-undo").onclick=()=>{write(before);render();hideApplied()};
+}
+function hideApplied(){$("applied").hidden=true}
+
+// the life rail: today → retirement → 60/80/90 on one age axis
+let lifeArgs=null;
+function drawLife(p,ages,lefts){
+  lifeArgs=[p,ages,lefts];
+  const el=$("life"), Wpx=el.clientWidth||600;
+  const A=p.age, Z=100, f=a=>(Math.min(Z,Math.max(A,a))-A)/(Z-A), pct=a=>(f(a)*100).toFixed(2)+'%';
+  const R=Math.min(p.retage,Z);
+  let h=`<div class="life-track"><span class="seg save" style="left:0;width:${pct(R)}"></span><span class="seg spend" style="left:${pct(R)};right:0"></span></div>`;
+  // dots
+  h+=`<span class="dot now" style="left:0"></span><span class="dot ret" style="left:${pct(R)}"></span>`;
+  ages.forEach((a,j)=>{const lc=lefts[j]>=0.8?'good':lefts[j]>=0.5?'warn':'bad';if(a!==R)h+=`<span class="dot ${lc}" style="left:${pct(a)}"></span>`});
+  // labels: place by priority on the row above, then the row below; skip what cannot fit
+  const items=[{a:A,t:'วันนี้ '+A,c:'now',rows:['top'],al:'start'},{a:R,t:'เกษียณ '+p.retage,c:'ret',rows:['bot','top']}];
+  ages.forEach(a=>{if(a!==R)items.push({a,t:String(a),c:'age',rows:['top','bot']})});
+  items.push({a:A,t:'ช่วงสะสม',c:'phase',rows:['bot'],al:'start'},{a:Z,t:'ช่วงใช้เงิน',c:'phase',rows:['bot'],al:'end'});
+  const used={top:[],bot:[]};
+  items.forEach(it=>{
+    const w=it.t.length*6.6+10, x=f(it.a)*Wpx, x0=it.al==='start'?x:it.al==='end'?x-w:x-w/2, x1=x0+w;
+    const row=it.rows.find(r=>used[r].every(([a,b])=>x1+6<a||x0-6>b));
+    if(!row)return;used[row].push([x0,x1]);
+    h+=`<span class="lab ${row} ${it.c}" style="left:${Math.max(0,Math.min(Wpx-w,x0)).toFixed(1)}px">${it.t}</span>`;
+  });
+  el.innerHTML=h;
+}
+window.addEventListener('resize',()=>{if(lifeArgs)drawLife(...lifeArgs)});
+
+let fanState=null;
 function drawFan(p,base){
   const svg=$("fan"), Wd=680,H=300,L=58,Rm=16,Tp=30,B=34;
   const T=Math.min(base.T,100-p.age);
@@ -264,24 +403,185 @@ function drawFan(p,base){
   for(let v=ymin;v<=ymax+1;v+=step){h+=`<line x1="${L}" x2="${Wd-Rm}" y1="${y(v)}" y2="${y(v)}"></line><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${(v/1e6).toLocaleString('th-TH',{maximumFractionDigits:1})}</text>`}
   h+='</g>';
   const xt=[];for(let a=Math.ceil(p.age/10)*10;a<=p.age+T;a+=10)xt.push(a);
-  xt.forEach(a=>h+=`<text x="${x(a-p.age)}" y="${H-B+18}" text-anchor="middle">${a}</text>`);
-  h+=`<text x="${L}" y="12" text-anchor="start">ล้านบาท</text><text x="${Wd-Rm}" y="${H-4}" text-anchor="end">อายุ</text>`;
+  xt.forEach(a=>h+=`<text class="ax" x="${x(a-p.age)}" y="${H-B+18}" text-anchor="middle">${a}</text>`);
+  h+=`<text class="ax" x="${L}" y="12" text-anchor="start">ล้านบาท</text><text class="ax" x="${Wd-Rm}" y="${H-4}" text-anchor="end">อายุ</text>`;
+  if(p.retage-p.age<=T){const rx=x(p.retage-p.age);h+=`<rect class="retzone" x="${rx}" y="${Tp}" width="${Wd-Rm-rx}" height="${H-Tp-B}"></rect>`}
   const area=(lo,hi)=>{let d='M'+x(0)+','+y(hi[0]);for(let t=1;t<=T;t++)d+='L'+x(t)+','+y(hi[t]);for(let t=T;t>=0;t--)d+='L'+x(t)+','+y(lo[t]);return d+'Z'};
-  h+=`<path class="b90" d="${area(P[0],P[4])}"></path><path class="b50" d="${area(P[1],P[3])}"></path>`;
+  h+=`<g class="plot"><path class="b90" d="${area(P[0],P[4])}"></path><path class="b50" d="${area(P[1],P[3])}"></path>`;
   let m='M'+x(0)+','+y(P[2][0]);for(let t=1;t<=T;t++)m+='L'+x(t)+','+y(P[2][t]);
   h+=`<line class="zero" x1="${L}" x2="${Wd-Rm}" y1="${y(0)}" y2="${y(0)}"></line>`;
   h+=`<path class="med" d="${m}"></path>`;
   if(p.retage-p.age<=T){const rx=x(p.retage-p.age);h+=`<line class="ret" x1="${rx}" x2="${rx}" y1="${Tp}" y2="${H-B}"></line><text class="lab" x="${rx+6}" y="${Tp+12}">เกษียณ ${p.retage}</text>`}
   const peak=P[2].indexOf(Math.max(...P[2]));
-  h+=`<circle cx="${x(peak)}" cy="${y(P[2][peak])}" r="4" fill="var(--accent)"></circle><text class="lab" x="${Math.min(x(peak)+8,Wd-150)}" y="${Math.max(y(P[2][peak])-8,Tp+28)}">สูงสุด ${fmtB(P[2][peak])} บาท ที่อายุ ${p.age+peak}</text>`;
+  h+=`<circle class="peak" cx="${x(peak)}" cy="${y(P[2][peak])}" r="4"></circle><text class="lab" x="${Math.min(x(peak)+8,Wd-150)}" y="${Math.max(y(P[2][peak])-8,Tp+28)}">สูงสุด ${fmtB(P[2][peak])} บาท ที่อายุ ${p.age+peak}</text></g>`;
+  h+=`<g class="cursor" id="cursor" visibility="hidden"><line id="cur-line" y1="${Tp}" y2="${H-B}"></line><circle id="cur-dot" r="5"></circle></g>`;
   svg.innerHTML=h;
+  fanState={P,T,age:p.age,x,y,L,Rm,Wd,idx:fanState&&fanState.idx!=null?Math.min(fanState.idx,T):null};
+  if(fanState.idx!=null&&!$("tip").hidden)showCursor(fanState.idx);
 }
 function niceStep(raw){const e=Math.pow(10,Math.floor(Math.log10(raw||1)));const f=raw/e;return (f<=1?1:f<=2?2:f<=5?5:10)*e}
+
+// chart reading: pointer or arrow keys
+function showCursor(t){
+  const f=fanState;if(!f)return;t=Math.max(0,Math.min(f.T,t));f.idx=t;
+  const cx=f.x(t), svg=$("fan"), wrap=$("chartwrap"), tip=$("tip");
+  $("cursor").setAttribute('visibility','visible');
+  const ln=$("cur-line");ln.setAttribute('x1',cx);ln.setAttribute('x2',cx);
+  const dot=$("cur-dot");dot.setAttribute('cx',cx);dot.setAttribute('cy',f.y(f.P[2][t]));
+  const mv=v=>v>0?baht(v):'หมดแล้ว';
+  tip.innerHTML=`<b>อายุ ${f.age+t} ปี</b><span><i class="k">อนาคตที่ดี (P90)</i><i class="num">${mv(f.P[4][t])}</i></span><span><i class="k">ค่ากลาง</i><i class="num">${mv(f.P[2][t])}</i></span><span><i class="k">อนาคตที่แย่ (P10)</i><i class="num">${mv(f.P[0][t])}</i></span>`;
+  tip.hidden=false;
+  const sr=svg.getBoundingClientRect(), wr=wrap.getBoundingClientRect();
+  const px=sr.left-wr.left+wrap.scrollLeft+cx/f.Wd*sr.width;
+  const tw=tip.offsetWidth, half=px<wrap.scrollLeft+wr.width/2;
+  tip.style.left=(half?px+14:px-tw-14)+'px';
+}
+function hideCursor(){if(!fanState)return;fanState.idx=null;$("tip").hidden=true;const c=$("cursor");if(c)c.setAttribute('visibility','hidden')}
+(function(){
+  const svg=$("fan"), wrap=$("chartwrap");
+  const at=e=>{const f=fanState;if(!f)return;const sr=svg.getBoundingClientRect();const vx=(e.clientX-sr.left)/sr.width*f.Wd;showCursor(Math.round((vx-f.L)/(f.Wd-f.L-f.Rm)*f.T))};
+  svg.addEventListener('pointermove',at);svg.addEventListener('pointerdown',at);
+  svg.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hideCursor()});
+  wrap.addEventListener('keydown',e=>{if(!fanState)return;const big=e.shiftKey?10:1;
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const cur=fanState.idx==null?0:fanState.idx;showCursor(cur+(e.key==='ArrowRight'?big:-big))}
+    else if(e.key==='Home'){e.preventDefault();showCursor(0)}else if(e.key==='End'){e.preventDefault();showCursor(fanState.T)}else if(e.key==='Escape')hideCursor()});
+  wrap.addEventListener('blur',hideCursor);
+})();
+
+// ===== the hero: a few hundred of this plan's futures as a slowly turning 3D landscape =====
+const fut={paths:[],bad:[],med:null,T:1,age:20,ret:60,ymax:1,ymin:0,prog:REDUCED?1:0,ang:-0.62,tilt:0.42,px:0,py:0,col:{},run:false,vis:true,t0:0};
+const cv=$("futures"), cx2=cv.getContext('2d');
+function readColors(){const cs=getComputedStyle(cv);['accent','bad','line','line-strong','muted','warn','ink','card'].forEach(k=>fut.col[k]=cs.getPropertyValue('--'+k).trim())}
+function setFutures(p,base){
+  const K=matchMedia('(max-width: 640px)').matches?70:110, T=Math.min(base.T,100-p.age), t90=Math.min(T,90-p.age);
+  const picks=[];
+  for(let j=0;j<K;j++){const i=Math.floor((j+0.5)*N/K), arr=new Float32Array(T+1);let bad=false;
+    for(let t=0;t<=T;t++){const v=base.wealth[i*(base.T+1)+t];arr[t]=v;if(t<=t90&&v<0)bad=true}
+    picks.push({arr,bad,key:arr[Math.min(T,Math.max(0,p.retage-p.age))]})}
+  picks.sort((a,b)=>b.key-a.key);
+  const med=new Float32Array(T+1);for(let t=0;t<=T;t++){const col=picks.map(q=>q.arr[t]).sort((a,b)=>a-b);med[t]=col[col.length>>1]}
+  const peaks=picks.map(q=>Math.max(...q.arr)).sort((a,b)=>a-b);
+  fut.ymax=Math.max(1,peaks[Math.floor(peaks.length*0.75)]);fut.ymin=-0.3*fut.ymax;
+  fut.paths=picks;fut.med=med;fut.T=T;fut.age=p.age;fut.ret=p.retage;
+  $("viz-note").textContent=`${K} จาก 2,000 อนาคตของแผนนี้`;
+  drawFutures();
+}
+function drawFutures(){
+  const dpr=Math.min(2,window.devicePixelRatio||1), W=cv.clientWidth, H=cv.clientHeight;if(!W||!H)return;
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+  const c=cx2, C=fut.col;c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
+  if(!fut.paths.length)return;
+  const ang=fut.ang+fut.scrollA+fut.dragA, tilt=Math.max(0.08,Math.min(0.95,fut.tilt+fut.dragT)), ca=Math.cos(ang), sa=Math.sin(ang), ct=Math.cos(tilt), st=Math.sin(tilt);
+  const D=3.4, sc=Math.min(W*0.40,H*0.58), ox=W*0.5, oy=H*0.7;
+  const P=(x,y,z)=>{const x1=x*ca+z*sa, z1=-x*sa+z*ca, y2=y*ct-z1*st, z2=y*st+z1*ct, s=D/(D+z2);return [ox+x1*s*sc, oy-y2*s*sc, z2]};
+  /* height is compressed (asinh) so a few very rich futures do not flatten against a ceiling */
+  const T=fut.T, X=t=>(t/T)*2.4-1.2, k=fut.ymax*0.35, Yv=v=>Math.asinh(Math.max(0,v)/k)/Math.asinh(fut.ymax/k)*0.8, nP=fut.paths.length, Z=j=>(j/(nP-1))*1.6-0.8;
+  // ground plane at zero wealth
+  c.lineWidth=1;c.strokeStyle=C['line-strong'];c.globalAlpha=0.55;
+  for(let k=0;k<=8;k++){const z=-0.8+k*0.2,a=P(-1.2,0,z),b=P(1.2,0,z);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke()}
+  for(let age=Math.ceil(fut.age/10)*10;age<=fut.age+T;age+=10){const x=X(age-fut.age),a=P(x,0,-0.8),b=P(x,0,0.8);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke();
+    c.globalAlpha=0.9;c.fillStyle=C.muted;c.font='500 11px Manrope, sans-serif';c.textAlign='center';c.fillText(age,b[0],b[1]+16);c.globalAlpha=0.55}
+  // retirement gate
+  if(fut.ret-fut.age<=T){const x=X(fut.ret-fut.age), a=P(x,0,-0.8), b=P(x,0,0.8), a2=P(x,0.85,-0.8), b2=P(x,0.85,0.8);
+    c.globalAlpha=0.08;c.fillStyle=C.warn;c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(b2[0],b2[1]);c.lineTo(a2[0],a2[1]);c.closePath();c.fill();
+    c.globalAlpha=0.8;c.strokeStyle=C.warn;c.setLineDash([4,4]);c.beginPath();c.moveTo(b[0],b[1]);c.lineTo(b2[0],b2[1]);c.stroke();c.setLineDash([]);
+    c.globalAlpha=1;c.fillStyle=C.warn;c.font='600 12px "Noto Sans Thai", sans-serif';c.textAlign='left';c.fillText('เกษียณ '+fut.ret,b2[0]+6,b2[1]+4)}
+  // paths, far to near
+  const tmax=Math.max(1,Math.floor(fut.prog*T));
+  const order=fut.paths.map((q,j)=>[j,P(0,0,Z(j))[2]]).sort((a,b)=>b[1]-a[1]);
+  c.lineJoin='round';
+  for(const [j,zd] of order){const q=fut.paths[j], z=Z(j), near=1-(zd+1)/2, a=0.14+0.46*Math.max(0,Math.min(1,near));
+    c.globalAlpha=a;c.strokeStyle=q.bad?C.bad:C.accent;c.lineWidth=1.1;
+    c.beginPath();let end=null;
+    for(let t=0;t<=tmax;t++){const v=q.arr[t];
+      if(v<0){const pv=q.arr[t-1]||0, f=pv/(pv-v), pt=P(X(t-1+f),0,z);c.lineTo(pt[0],pt[1]);end=pt;break} // money ran out: the path lands on the ground and stops
+      const pt=P(X(t),Yv(v),z);t?c.lineTo(pt[0],pt[1]):c.moveTo(pt[0],pt[1])}
+    c.stroke();
+    if(end){c.globalAlpha=Math.min(1,a+0.25);c.fillStyle=C.bad;c.beginPath();c.arc(end[0],end[1],1.8,0,Math.PI*2);c.fill()}}
+  // the median future, front and centre
+  c.globalAlpha=1;c.strokeStyle=C.ink;c.lineWidth=2.6;c.beginPath();let mt=tmax;
+  for(let t=0;t<=tmax;t++){const v=fut.med[t];if(v<0){const pv=fut.med[t-1]||0, f=pv/(pv-v), pt=P(X(t-1+f),0,0);c.lineTo(pt[0],pt[1]);mt=t-1+f;break}const pt=P(X(t),Yv(v),0);t?c.lineTo(pt[0],pt[1]):c.moveTo(pt[0],pt[1])}c.stroke();
+  const e=mt<tmax?P(X(mt),0,0):P(X(tmax),Yv(fut.med[tmax]),0);c.fillStyle=C.card;c.strokeStyle=C.ink;c.lineWidth=2;c.beginPath();c.arc(e[0],e[1],4.5,0,Math.PI*2);c.fill();c.stroke();
+  c.globalAlpha=1;
+}
+/* the landscape turns only when asked: drag it (with a little momentum on release), or scroll past it */
+fut.scrollA=0;fut.scrollTarget=0;fut.dragA=0;fut.dragT=0;fut.vel=0;fut.drag=null;
+(function(){
+  readColors();
+  const hero=document.querySelector('.hero');
+  const scrollGoal=()=>{if(REDUCED)return 0;const h=hero.offsetHeight||600;return Math.max(0,Math.min(1.3,window.scrollY/h))*0.75};
+  const loop=now=>{if(!fut.run)return;
+    if(!fut.t0)fut.t0=now;
+    let dirty=false;
+    if(fut.prog<1){const k=Math.min(1,(now-fut.t0)/2200);fut.prog=1-Math.pow(1-k,3);dirty=true}
+    const g=scrollGoal();if(Math.abs(g-fut.scrollA)>1e-4){fut.scrollA+=(g-fut.scrollA)*0.12;dirty=true}
+    if(!fut.drag&&Math.abs(fut.vel)>1e-4){fut.dragA=Math.max(-1.3,Math.min(1.3,fut.dragA+fut.vel));fut.vel*=0.92;dirty=true}
+    if(dirty)drawFutures();
+    requestAnimationFrame(loop)};
+  const start=()=>{if(REDUCED||fut.run||!fut.vis||document.hidden)return;fut.run=true;requestAnimationFrame(loop)};
+  const stop=()=>{fut.run=false};
+  if(window.IntersectionObserver)new IntersectionObserver(es=>{fut.vis=es[0].isIntersecting;fut.vis?start():stop()}).observe(cv);
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+  // drag to turn (horizontal) and tilt (vertical); touch keeps vertical page scrolling
+  cv.addEventListener('pointerdown',e=>{if(e.button!==0)return;fut.drag={x:e.clientX,y:e.clientY,id:e.pointerId};fut.vel=0;cv.setPointerCapture(e.pointerId);cv.classList.add('dragging')});
+  cv.addEventListener('pointermove',e=>{const d=fut.drag;if(!d||d.id!==e.pointerId)return;
+    const dx=e.clientX-d.x, dy=e.clientY-d.y;d.x=e.clientX;d.y=e.clientY;
+    const da=dx*0.0045;fut.dragA=Math.max(-1.3,Math.min(1.3,fut.dragA+da));fut.vel=da;
+    if(e.pointerType==='mouse')fut.dragT=Math.max(-0.34,Math.min(0.5,fut.dragT+dy*0.004));
+    drawFutures()});
+  const end=e=>{if(!fut.drag)return;fut.drag=null;cv.classList.remove('dragging');if(REDUCED)fut.vel=0};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('lostpointercapture',end);
+  cv.addEventListener('dblclick',()=>{fut.dragA=0;fut.dragT=0;fut.vel=0;drawFutures()});
+  if(window.ResizeObserver)new ResizeObserver(()=>drawFutures()).observe(cv);
+  const recolor=()=>requestAnimationFrame(()=>{readColors();drawFutures()});
+  themeBtn.addEventListener('click',recolor);sysDark.addEventListener('change',recolor);
+  window.__futStart=start;
+})();
+
 function clearPersona(){document.querySelectorAll('.personas button').forEach(b=>b.setAttribute('aria-pressed','false'))}
-document.querySelectorAll('.personas button').forEach(b=>b.onclick=()=>{clearPersona();b.setAttribute('aria-pressed','true');write(PERSONAS[b.dataset.p]);render()});
-let tm;const onIn=()=>{clearPersona();clearTimeout(tm);ids.forEach(k=>{const el=$(k);$('o-'+k).textContent=outs[k](+el.value);el.style.setProperty('--fill',((el.value-el.min)/(el.max-el.min)*100)+'%');el.setAttribute('aria-valuetext',outs[k](+el.value));});tm=setTimeout(render,60)};
-ids.forEach(k=>$(k).addEventListener('input',onIn));["risk","smart","debtfirst"].forEach(k=>$(k).addEventListener('change',()=>{clearPersona();render()}));
+document.querySelectorAll('.personas button').forEach(b=>b.onclick=()=>{clearPersona();hideApplied();b.setAttribute('aria-pressed','true');write(PERSONAS[b.dataset.p]);render()});
+let tm;const later=ms=>{hideApplied();clearTimeout(tm);tm=setTimeout(render,ms)};
+ids.forEach(k=>{
+  const el=$(k), n=$('n-'+k);
+  el.addEventListener('input',()=>{clearPersona();vals[k]=+el.value;showVal(k);hints();later(60)});
+  const acceptTyped=final=>{
+    const parsed=parseTyped(k,n.value);
+    if(parsed.error){inputErrors[k]=parsed.error;hints();return}
+    delete inputErrors[k];clearPersona();vals[k]=parsed.value;
+    showVal(k,!final);hints();later(final?0:260);
+  };
+  n.addEventListener('input',()=>acceptTyped(false));
+  n.addEventListener('blur',()=>acceptTyped(true));
+  n.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){n.blur();return}
+    if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();const st=+el.step*(e.shiftKey?10:1);vals[k]=clamp(k,vals[k]+(e.key==='ArrowUp'?st:-st));clearPersona();showVal(k);hints();later(120)}
+  });
+  n.addEventListener('focus',()=>n.select());
+});
+["risk","smart","debtfirst"].forEach(k=>$(k).addEventListener('change',()=>{clearPersona();hideApplied();render()}));
 write(PERSONAS.first);render();
+
+// --- story moments: the gauge fills, the chart draws, the future selves arrive in order
+if(root.classList.contains('js-motion')){
+  /* fire once the element's top has come ~20% into the screen, whatever its height */
+  const once=(el,fn)=>{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.disconnect();fn()}}),{threshold:0,rootMargin:'0px 0px -20% 0px'});io.observe(el)};
+  once($("verdict"),()=>{verdictSeen=true;const a=$("arc");requestAnimationFrame(()=>a.setAttribute("stroke-dashoffset",a.dataset.target));const s=shownPct;shownPct=null;tweenPct(s)});
+  once($("chartwrap"),()=>$("chartwrap").classList.add('in'));
+  once($("life"),()=>{$("selves").classList.add('in');$("life").classList.add('in')});
+  /* chapters, what-ifs and theory rise in as they arrive and sink back as they leave, in both scroll directions */
+  const rv=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('in',e.isIntersecting)),{threshold:0,rootMargin:'-8% 0px -12% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>rv.observe(el));
+}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));verdictSeen=true;const a=$("arc");a.setAttribute("stroke-dashoffset",a.dataset.target)}
+
+// --- phone/tablet: keep the headline number in reach while editing
+(function(){
+  const dock=$("dock"), mq=matchMedia('(max-width: 1279px)');
+  let vis=true;
+  const upd=()=>{const on=mq.matches&&!vis;dock.classList.toggle('show',on);dock.setAttribute('aria-hidden',on?'false':'true');dock.tabIndex=on?0:-1};
+  /* only once the result has scrolled away above the screen */
+  if(window.IntersectionObserver){new IntersectionObserver(es=>{const e=es[0];vis=e.isIntersecting||e.boundingClientRect.top>0;upd()},{threshold:0}).observe($("verdict"))}
+  mq.addEventListener('change',upd);
+})();
 })();
 </script>
 
