@@ -3,6 +3,12 @@
 แพลตฟอร์มวางแผนการเงินตลอดชีวิต (Trinity Hackathon 2026 · Track 2 Wealth for Everyone)
 จำลองอนาคตทางการเงิน 2,000 เส้นทางด้วย Monte Carlo แล้วสรุปเป็นตัวเลขเดียว: **โอกาสที่เงินจะพอใช้ตลอดชีวิต**
 
+## เว็บไซต์
+
+https://kueranan.github.io/live-long-wealthy/
+
+GitHub Pages เผยแพร่โฟลเดอร์ `web` อัตโนมัติเมื่อ push การเปลี่ยนแปลงเว็บไซต์เข้า `main` ผ่าน workflow `.github/workflows/pages.yml`
+
 ## รันบนเครื่อง
 
 ```bash
