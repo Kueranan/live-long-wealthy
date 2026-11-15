@@ -69,7 +69,7 @@ if(window.IntersectionObserver&&!matchMedia('(prefers-reduced-motion: reduce)').
           <div class="group">
             <div class="field" data-k="age"><div class="field-top"><label for="n-age">อายุ</label><span class="num-in"><input id="n-age" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-age"><span class="unit">ปี</span></span></div><input type="range" id="age" min="20" max="64" step="1" aria-label="อายุ แถบเลื่อน"><p class="hint" id="hint-age" role="status"></p></div>
             <div class="field" data-k="income"><div class="field-top"><label for="n-income">รายได้ต่อเดือน</label><span class="num-in"><input id="n-income" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-income"><span class="unit">บาท</span></span></div><input type="range" id="income" min="10000" max="200000" step="1000" aria-label="รายได้ต่อเดือน แถบเลื่อน"><p class="hint" id="hint-income" role="status"></p></div>
-            <div class="field" data-k="saving"><div class="field-top"><label for="n-saving">เงินออม/ลงทุนต่อเดือน</label><span class="num-in"><input id="n-saving" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-saving"><span class="unit">บาท</span></span></div><input type="range" id="saving" min="0" max="60000" step="500" aria-label="เงินออมต่อเดือน แถบเลื่อน"><p class="hint" id="hint-saving" role="status"></p></div>
+            <div class="field" data-k="saving"><div class="field-top"><label for="n-saving">เงินออม/ลงทุนต่อเดือน<small id="rate-note"></small></label><span class="num-in"><input id="n-saving" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-saving"><span class="unit">บาท</span></span></div><input type="range" id="saving" min="0" max="60000" step="500" aria-label="เงินออมต่อเดือน แถบเลื่อน"><p class="hint" id="hint-saving" role="status"></p></div>
             <div class="field" data-k="assets"><div class="field-top"><label for="n-assets">เงินเก็บที่มีอยู่</label><span class="num-in"><input id="n-assets" type="text" inputmode="numeric" autocomplete="off" aria-describedby="hint-assets"><span class="unit">บาท</span></span></div><input type="range" id="assets" min="0" max="10000000" step="5000" aria-label="เงินเก็บที่มีอยู่ แถบเลื่อน"><p class="hint" id="hint-assets" role="status"></p></div>
           </div>
           <div class="group">
@@ -268,13 +268,15 @@ function parseTyped(k,text){
 }
 const clamp=(k,v)=>Math.min(LIM[k][1],Math.max(LIM[k][0],v));
 function setFill(el){const v=Math.min(+el.max,Math.max(+el.min,+el.value));el.style.setProperty('--fill',((v-el.min)/(el.max-el.min)*100)+'%')}
+function followIncome(oldInc){if(oldInc>0&&vals.income!==oldInc){vals.saving=clamp('saving',Math.round(vals.saving*vals.income/oldInc/100)*100);showVal('saving')}}
 function showVal(k,skipTyped){const el=$(k),n=$('n-'+k);el.value=vals[k];setFill(el);el.setAttribute('aria-valuetext',outs[k](vals[k]));if(!skipTyped){n.value=grp(vals[k]);delete inputErrors[k]}}
 function read(){const p={};ids.forEach(k=>p[k]=vals[k]);p.risk=$("risk").value;p.smart=$("smart").checked;p.debtfirst=$("debtfirst").checked;if(p.retage<=p.age)p.retage=p.age+1;return p}
 function write(p){ids.forEach(k=>{vals[k]=clamp(k,+p[k]);showVal(k)});$("risk").value=p.risk;$("smart").checked=p.smart;$("debtfirst").checked=p.debtfirst}
 function hints(){
   const h=(k,msg)=>{msg=inputErrors[k]||msg;const e=$('hint-'+k),n=$('n-'+k);e.textContent=msg||'';e.classList.toggle('on',!!msg);n.closest('.num-in').classList.toggle('warn',!!msg);n.setAttribute('aria-invalid',inputErrors[k]?'true':'false');n.setCustomValidity(inputErrors[k]||'')};
   ids.forEach(k=>h(k,''));
-  h('saving',vals.saving>vals.income&&vals.income>0?'เงินออมมากกว่ารายได้ ลองตรวจตัวเลขอีกครั้ง':'');
+  $('rate-note').textContent=vals.income>0?'คิดเป็น '+(vals.saving/vals.income*100).toLocaleString('th-TH',{maximumFractionDigits:1})+'% ของรายได้':'';
+  h('saving',vals.saving>vals.income&&vals.income>0?'เงินออมมากกว่ารายได้ ลองตรวจตัวเลขอีกครั้ง':vals.income>0&&vals.saving+vals.dpay>vals.income?'เงินออมรวมค่างวดหนี้มากกว่ารายได้ ลองตรวจตัวเลขอีกครั้ง':'');
   h('dpay',vals.debt>0&&vals.drate>0&&vals.dpay*12<=vals.debt*vals.drate/100?'ค่างวดไม่พอจ่ายดอกเบี้ย หนี้จะเพิ่มขึ้นทุกปี':'');
   h('retage',vals.retage<=vals.age?'อายุเกษียณต้องมากกว่าอายุปัจจุบัน ระบบใช้ '+(vals.age+1)+' ปีแทน':'');
 }
@@ -310,7 +312,8 @@ function render(){
   const ss=safeSpend(p);
   $("lead").innerHTML=`ถ้าใช้เงินแบบวันนี้ต่อไป คุณมีโอกาส <span class="num">${pc(s)}</span> ที่เงินจะพอใช้ไปตลอดชีวิต`+
     (base.ruinAges.length?` ในอนาคตที่เงินไม่พอ เงินมักหมดตอนอายุราว <span class="num">${Math.round(medRuin)}</span> ปี`:'');
-  $("lead2").innerHTML=`ค่ากลางอายุขัยของคุณราว <span class="num">${Math.round(life)}</span> ปี แต่มีโอกาส <span class="num">${pc(survive(p.age,90))}</span> ที่จะอยู่ถึง 90 · หลังเกษียณใช้ได้ไม่เกินราว <b class="num">${baht(ss)}/เดือน</b> เพื่อให้เงินพอในอย่างน้อย 85% ของอนาคต`;
+  $("lead2").innerHTML=`ค่ากลางอายุขัยของคุณราว <span class="num">${Math.round(life)}</span> ปี แต่มีโอกาส <span class="num">${pc(survive(p.age,90))}</span> ที่จะอยู่ถึง 90 · หลังเกษียณใช้ได้ไม่เกินราว <b class="num">${baht(ss)}/เดือน</b> เพื่อให้เงินพอในอย่างน้อย 85% ของอนาคต`+
+    (p.income>0?` · รายได้ <span class="num">${baht(p.income)}</span>/เดือน ออมอยู่ <span class="num">${(p.saving/p.income*100).toLocaleString('th-TH',{maximumFractionDigits:1})}%</span> ของรายได้ ค่าใช้จ่ายหลังเกษียณเท่ากับ <span class="num">${pc(p.spend/p.income)}</span> ของรายได้วันนี้`:'');
   // future selves
   const ages=[60,80,90].map(a=>Math.max(a,p.age+1));
   const lefts=[];
@@ -325,14 +328,14 @@ function render(){
       <div class="kv"><span>โอกาสยังมีเงินเหลือ</span><span class="num">${pc(left)}</span></div>
       <div class="bar ${lc}" aria-hidden="true"><i style="width:${(left*100).toFixed(0)}%"></i></div>
       <div class="kv"><span>โอกาสมีชีวิตถึงอายุนี้</span><span class="num">${pc(alive)}</span></div>
-      <p class="note">${a<p.retage?'ช่วงสะสมความมั่งคั่ง สัดส่วนหุ้นราว '+pc(Math.min(.9,Math.max(.1,(110-a)/100*+p.risk))):left>=0.8?'ใช้ชีวิตได้ตามแผน':left>=0.5?'ต้องเริ่มลดค่าใช้จ่ายบางส่วน':'มีความเสี่ยงต้องพึ่งลูกหลานหรือสวัสดิการรัฐ'}</p></article>`;
+      <p class="note">${a<p.retage?'ช่วงสะสมความมั่งคั่ง รายได้ราว '+baht(Math.round(p.income*Math.pow(1.02,a-p.age)/1000)*1000)+'/เดือน สัดส่วนหุ้นราว '+pc(Math.min(.9,Math.max(.1,(110-a)/100*+p.risk))):left>=0.8?'ใช้ชีวิตได้ตามแผน':left>=0.5?'ต้องเริ่มลดค่าใช้จ่ายบางส่วน':'มีความเสี่ยงต้องพึ่งลูกหลานหรือสวัสดิการรัฐ'}</p></article>`;
   }).join('');
   drawLife(p,ages,lefts);
   drawFan(p,base);
   // what-ifs
   const W=[
     {t:'ออมเพิ่มเดือนละ 500 บาท',d:'เท่ากับกาแฟราว 4 แก้ว',ch:{saving:p.saving+500}},
-    {t:'ออมเพิ่มเดือนละ 2,000 บาท',d:'',ch:{saving:p.saving+2000}},
+    {t:'ออมเพิ่ม 5% ของรายได้',d:`เดือนละ ${baht(Math.round(p.income*0.05/100)*100)}`,ch:{saving:p.saving+Math.round(p.income*0.05/100)*100},hide:p.income<=0},
     {t:'เกษียณช้าลง 3 ปี',d:`อายุ ${p.retage+3} ปี`,ch:{retage:p.retage+3},hide:p.retage+3>LIM.retage[1]},
     {t:'ลดค่าใช้จ่ายหลังเกษียณ 10%',d:baht(Math.round(p.spend*0.9/1000)*1000)+'/เดือน',ch:{spend:Math.round(p.spend*0.9/1000)*1000}},
     {t:'เปิด Save More Tomorrow',d:'เพิ่มอัตราออมปีละ 1%',ch:{smart:true},hide:p.smart},
@@ -386,11 +389,12 @@ function drawLife(p,ages,lefts){
   });
   el.innerHTML=h;
 }
-window.addEventListener('resize',()=>{if(lifeArgs)drawLife(...lifeArgs)});
+window.addEventListener('resize',()=>{if(lifeArgs)drawLife(...lifeArgs);const w=$("chartwrap").clientWidth;if(fanArgs&&w!==fanW){fanW=w;drawFan(...fanArgs)}});
 
-let fanState=null;
+let fanState=null, fanArgs=null, fanW=0;
 function drawFan(p,base){
-  const svg=$("fan"), Wd=680,H=300,L=58,Rm=16,Tp=30,B=34;
+  const svg=$("fan"), Wd=Math.max(280,Math.round($("chartwrap").clientWidth||680)), H=Wd<520?240:300, L=Wd<520?40:52, Rm=12, Tp=30, B=34;
+  svg.setAttribute("viewBox",`0 0 ${Wd} ${H}`);fanArgs=[p,base];
   const T=Math.min(base.T,100-p.age);
   const P=[0.1,0.25,0.5,0.75,0.9].map(()=>[]);
   for(let t=0;t<=T;t++){const col=new Float64Array(N);for(let i=0;i<N;i++)col[i]=base.wealth[i*(base.T+1)+t];
@@ -413,7 +417,10 @@ function drawFan(p,base){
   h+=`<path class="med" d="${m}"></path>`;
   if(p.retage-p.age<=T){const rx=x(p.retage-p.age);h+=`<line class="ret" x1="${rx}" x2="${rx}" y1="${Tp}" y2="${H-B}"></line><text class="lab" x="${rx+6}" y="${Tp+12}">เกษียณ ${p.retage}</text>`}
   const peak=P[2].indexOf(Math.max(...P[2]));
-  h+=`<circle class="peak" cx="${x(peak)}" cy="${y(P[2][peak])}" r="4"></circle><text class="lab" x="${Math.min(x(peak)+8,Wd-150)}" y="${Math.max(y(P[2][peak])-8,Tp+28)}">สูงสุด ${fmtB(P[2][peak])} บาท ที่อายุ ${p.age+peak}</text></g>`;
+  const pkx=x(peak), pky=y(P[2][peak]), pkT=`สูงสุด ${fmtB(P[2][peak])} บาท ที่อายุ ${p.age+peak}`, pkW=pkT.replace(/[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g,'').length*6.6;
+  /* keep the peak label inside the frame: right of the dot, else left of it, else pinned to the edge */
+  const pkX=pkx+8+pkW<=Wd-Rm?pkx+8:pkx-8-pkW>=L?pkx-8-pkW:Math.max(L,Wd-Rm-pkW);
+  h+=`<circle class="peak" cx="${pkx}" cy="${pky}" r="4"></circle><text class="lab" x="${pkX.toFixed(1)}" y="${Math.max(pky-10,Tp+28)}">${pkT}</text></g>`;
   h+=`<g class="cursor" id="cursor" visibility="hidden"><line id="cur-line" y1="${Tp}" y2="${H-B}"></line><circle id="cur-dot" r="5"></circle></g>`;
   svg.innerHTML=h;
   fanState={P,T,age:p.age,x,y,L,Rm,Wd,idx:fanState&&fanState.idx!=null?Math.min(fanState.idx,T):null};
@@ -543,18 +550,18 @@ document.querySelectorAll('.personas button').forEach(b=>b.onclick=()=>{clearPer
 let tm;const later=ms=>{hideApplied();clearTimeout(tm);tm=setTimeout(render,ms)};
 ids.forEach(k=>{
   const el=$(k), n=$('n-'+k);
-  el.addEventListener('input',()=>{clearPersona();vals[k]=+el.value;showVal(k);hints();later(60)});
+  el.addEventListener('input',()=>{clearPersona();const old=vals[k];vals[k]=+el.value;showVal(k);if(k==='income')followIncome(old);hints();later(60)});
   const acceptTyped=final=>{
     const parsed=parseTyped(k,n.value);
     if(parsed.error){inputErrors[k]=parsed.error;hints();return}
-    delete inputErrors[k];clearPersona();vals[k]=parsed.value;
+    delete inputErrors[k];clearPersona();const old=vals[k];vals[k]=parsed.value;if(k==='income')followIncome(old);
     showVal(k,!final);hints();later(final?0:260);
   };
   n.addEventListener('input',()=>acceptTyped(false));
   n.addEventListener('blur',()=>acceptTyped(true));
   n.addEventListener('keydown',e=>{
     if(e.key==='Enter'){n.blur();return}
-    if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();const st=+el.step*(e.shiftKey?10:1);vals[k]=clamp(k,vals[k]+(e.key==='ArrowUp'?st:-st));clearPersona();showVal(k);hints();later(120)}
+    if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();const st=+el.step*(e.shiftKey?10:1),old=vals[k];vals[k]=clamp(k,vals[k]+(e.key==='ArrowUp'?st:-st));if(k==='income')followIncome(old);clearPersona();showVal(k);hints();later(120)}
   });
   n.addEventListener('focus',()=>n.select());
 });
