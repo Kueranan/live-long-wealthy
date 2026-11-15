@@ -39,7 +39,8 @@
 
 /* ---------- base ---------- */
 *{box-sizing:border-box}
-html{scroll-padding-top:84px;scrollbar-color:var(--line-strong) var(--paper);-webkit-text-size-adjust:100%}
+html{scroll-padding-top:84px;scrollbar-width:none;-ms-overflow-style:none;-webkit-text-size-adjust:100%}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 ::selection{background:var(--accent);color:var(--on-accent)}
 input,select,textarea{caret-color:var(--accent)}
@@ -101,7 +102,8 @@ h2{font-weight:600;font-size:19px;line-height:1.35}
 
 .planner{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:24px}
 @media(min-width:1280px){.planner{grid-template-columns:360px minmax(0,1fr);gap:32px}
-  .rail{position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-bottom:2px}}
+  .rail{position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+  .rail::-webkit-scrollbar{display:none}}
 .rail,.results{display:flex;flex-direction:column;gap:20px;min-width:0}
 .results{scroll-margin-top:84px}
 .results:focus{outline:none}
@@ -225,8 +227,8 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px var(-
 .self .note{font-size:12.5px;line-height:1.6;color:var(--muted);margin:2px 0 0;padding-top:10px;border-top:1px dashed var(--line)}
 
 /* ---------- fan chart ---------- */
-.chartwrap{position:relative;overflow-x:auto;border-radius:var(--r-sm);-webkit-overflow-scrolling:touch}
-svg.fan{width:100%;min-width:520px;height:auto;display:block;touch-action:pan-y;cursor:crosshair}
+.chartwrap{position:relative;overflow:hidden;border-radius:var(--r-sm)}
+svg.fan{width:100%;height:auto;display:block;touch-action:pan-y;cursor:crosshair}
 .fan .chart-grid line{stroke:var(--line)} .fan text{fill:var(--muted);font-size:11px;font-family:var(--f-num)}
 .fan .b90{fill:var(--band2)} .fan .b50{fill:var(--band)} .fan .med{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round}
 .fan .retzone{fill:var(--retzone)}
